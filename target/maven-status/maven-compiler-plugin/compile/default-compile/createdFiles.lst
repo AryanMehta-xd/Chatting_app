@@ -1,6 +1,5 @@
 com\mycompany\resources\main_page.class
 com\mycompany\resources\login_page$3.class
-com\mycompany\resources\login_page$9.class
 com\mycompany\resources\signup_page$2.class
 com\mycompany\resources\main_page$1.class
 com\mycompany\resources\login_page.class
@@ -13,8 +12,8 @@ com\mycompany\resources\signup_page$4.class
 com\mycompany\resources\login_page$6.class
 com\mycompany\dataPacks\imageMethods.class
 com\mycompany\resources\login_page$1.class
-com\mycompany\resources\login_page$8.class
 com\mycompany\resources\login_page$5.class
+com\mycompany\resources\signup_page$6.class
 com\mycompany\resources\login_page$4.class
 com\mycompany\resources\signup_page$5.class
 com\mycompany\dataPacks\db_conn.class

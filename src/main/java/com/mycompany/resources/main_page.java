@@ -1,11 +1,18 @@
 package com.mycompany.resources;
 
 import com.mycompany.dataPacks.*;
+import java.net.InetAddress;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class main_page extends javax.swing.JFrame {
     
     //constructor Declaration
     imageMethods im = new imageMethods();
+    InetAddress inetAddress;
+    PreparedStatement ps;
+    ResultSet rs;
+    db_conn db_var = new db_conn();
     
     //global Variable
     private String send_path = "src/main/java/com/mycompany/Images/icons8_paper_plane_24px.png";

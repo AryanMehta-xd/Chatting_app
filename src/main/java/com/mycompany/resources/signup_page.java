@@ -3,6 +3,7 @@ package com.mycompany.resources;
 import com.mycompany.dataPacks.*;
 import java.awt.Color;
 import java.io.File;
+import java.net.InetAddress;
 import java.io.FileInputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +46,7 @@ public class signup_page extends javax.swing.JFrame {
     public void init(){
         setVisible(true);
         tf_profile_photo.setIcon(im.reSize(path_default_img, tf_profile_photo));
-        lbl_warning.setVisible(false);
+        lbl_warning.setVisible(false); 
     }
     
     @SuppressWarnings("unchecked")
