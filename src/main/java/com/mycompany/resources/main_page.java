@@ -62,8 +62,13 @@ public class main_page extends javax.swing.JFrame {
                 
                 con_tab.setPanelListener(new PanelClickListener() {
                     @Override
-                    public void onPanelClick(String username) {
-                        System.out.println(""+username);
+                    public void onPanelClick(String user) {
+                        
+                        pan_chat_det.setSize(652,50);
+                        lbl_username_chat.setText(user);
+                        lbl_chat_img.setIcon(im.getImage(lbl_chat_img, user));
+                        pan_chatOpen.setVisible(true);
+                        pan_noChatOpen.setVisible(false);
                     }
                 });
                 
@@ -85,10 +90,14 @@ public class main_page extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         pan_msg = new javax.swing.JPanel();
         pan_noChatOpen = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         pan_chatOpen = new javax.swing.JPanel();
         but_send = new javax.swing.JButton();
         tf_send = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        pan_chat_det = new javax.swing.JPanel();
+        lbl_username_chat = new javax.swing.JLabel();
+        lbl_chat_img = new javax.swing.JLabel();
         pan_contact = new javax.swing.JPanel();
         pan_no_friend = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -132,17 +141,30 @@ public class main_page extends javax.swing.JFrame {
 
         pan_msg.setLayout(new java.awt.CardLayout());
 
-        pan_noChatOpen.setBackground(new java.awt.Color(255, 255, 255));
+        pan_noChatOpen.setBackground(new java.awt.Color(255, 102, 102));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pan_noChatOpenLayout = new javax.swing.GroupLayout(pan_noChatOpen);
         pan_noChatOpen.setLayout(pan_noChatOpenLayout);
         pan_noChatOpenLayout.setHorizontalGroup(
             pan_noChatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 672, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_noChatOpenLayout.createSequentialGroup()
+                .addContainerGap(404, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(193, 193, 193))
         );
         pan_noChatOpenLayout.setVerticalGroup(
             pan_noChatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 483, Short.MAX_VALUE)
+            .addGroup(pan_noChatOpenLayout.createSequentialGroup()
+                .addGap(166, 166, 166)
+                .addComponent(jButton1)
+                .addContainerGap(294, Short.MAX_VALUE))
         );
 
         pan_msg.add(pan_noChatOpen, "card2");
@@ -161,15 +183,45 @@ public class main_page extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        pan_chat_det.setBackground(new java.awt.Color(255, 255, 255));
+
+        lbl_username_chat.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
+
+        lbl_chat_img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout pan_chat_detLayout = new javax.swing.GroupLayout(pan_chat_det);
+        pan_chat_det.setLayout(pan_chat_detLayout);
+        pan_chat_detLayout.setHorizontalGroup(
+            pan_chat_detLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_chat_detLayout.createSequentialGroup()
+                .addComponent(lbl_chat_img, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_username_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pan_chat_detLayout.setVerticalGroup(
+            pan_chat_detLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_chat_detLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_username_chat, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(lbl_chat_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pan_chat_det, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 435, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(pan_chat_det, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 385, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pan_chatOpenLayout = new javax.swing.GroupLayout(pan_chatOpen);
@@ -329,6 +381,11 @@ public class main_page extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tf_search_userKeyReleased
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        pan_chatOpen.setVisible(true);
+        pan_noChatOpen.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -371,13 +428,17 @@ public class main_page extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton but_send;
     private javax.swing.JLayeredPane contact_list_pan;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_chat_img;
     private javax.swing.JLabel lbl_img;
+    private javax.swing.JLabel lbl_username_chat;
     private javax.swing.JPanel pan_chatOpen;
+    private javax.swing.JPanel pan_chat_det;
     private javax.swing.JPanel pan_contact;
     private javax.swing.JPanel pan_msg;
     private javax.swing.JPanel pan_noChatOpen;
