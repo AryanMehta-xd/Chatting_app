@@ -1,10 +1,9 @@
 package com.mycompany.resources;
 
+import com.mycompany.dataPacks.PanelClickListener;
 import com.mycompany.dataPacks.db_conn;
 import com.mycompany.dataPacks.imageMethods;
 import java.awt.Color;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.Icon;
 
 /**
@@ -14,6 +13,7 @@ import javax.swing.Icon;
 public class contact_tab extends javax.swing.JPanel {
 
     private String username;
+    private PanelClickListener listener;
     
     db_conn db_var = new db_conn();
     imageMethods im = new imageMethods();
@@ -34,6 +34,10 @@ public class contact_tab extends javax.swing.JPanel {
             lbl_img.setText("Image not found");
         }
             lbl_status.setBackground(Color.GREEN);
+    }
+    
+    public void setPanelListener(PanelClickListener panelClickListener){
+        this.listener = panelClickListener;
     }
     
     /**
@@ -57,6 +61,11 @@ public class contact_tab extends javax.swing.JPanel {
         lbl_status.setOpaque(true);
 
         lbl_username.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
+        lbl_username.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_usernameMouseClicked(evt);
+            }
+        });
 
         lbl_img.setBackground(new java.awt.Color(255, 255, 255));
         lbl_img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -87,6 +96,12 @@ public class contact_tab extends javax.swing.JPanel {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lbl_usernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_usernameMouseClicked
+        if(listener!=null){
+            listener.onPanelClick(username);
+        }
+    }//GEN-LAST:event_lbl_usernameMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

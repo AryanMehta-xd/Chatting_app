@@ -3,6 +3,7 @@ package com.mycompany.resources;
 import com.mycompany.dataPacks.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
 public class main_page extends javax.swing.JFrame {
@@ -57,7 +58,16 @@ public class main_page extends javax.swing.JFrame {
             rs = ps.executeQuery();
             
             while(rs.next()){
-                contact_list_pan.add(new contact_tab(rs.getString("receiver_username")));
+                contact_tab con_tab = new contact_tab(rs.getString("receiver_username"));
+                
+                con_tab.setPanelListener(new PanelClickListener() {
+                    @Override
+                    public void onPanelClick(String username) {
+                        System.out.println(""+username);
+                    }
+                });
+                
+                contact_list_pan.add(con_tab,"wrap");
             }
             
         } catch (Exception e) {
@@ -75,7 +85,6 @@ public class main_page extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         pan_msg = new javax.swing.JPanel();
         pan_noChatOpen = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         pan_chatOpen = new javax.swing.JPanel();
         but_send = new javax.swing.JButton();
         tf_send = new javax.swing.JTextField();
@@ -123,30 +132,17 @@ public class main_page extends javax.swing.JFrame {
 
         pan_msg.setLayout(new java.awt.CardLayout());
 
-        pan_noChatOpen.setBackground(new java.awt.Color(255, 102, 102));
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        pan_noChatOpen.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout pan_noChatOpenLayout = new javax.swing.GroupLayout(pan_noChatOpen);
         pan_noChatOpen.setLayout(pan_noChatOpenLayout);
         pan_noChatOpenLayout.setHorizontalGroup(
             pan_noChatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_noChatOpenLayout.createSequentialGroup()
-                .addContainerGap(404, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(193, 193, 193))
+            .addGap(0, 672, Short.MAX_VALUE)
         );
         pan_noChatOpenLayout.setVerticalGroup(
             pan_noChatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pan_noChatOpenLayout.createSequentialGroup()
-                .addGap(166, 166, 166)
-                .addComponent(jButton1)
-                .addContainerGap(294, Short.MAX_VALUE))
+            .addGap(0, 483, Short.MAX_VALUE)
         );
 
         pan_msg.add(pan_noChatOpen, "card2");
@@ -320,11 +316,6 @@ public class main_page extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pan_chatOpen.setVisible(true);
-        pan_noChatOpen.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void but_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_sendActionPerformed
         msg = tf_send.getText();
         cl.sendMessage(username, "xyz", msg);
@@ -380,7 +371,6 @@ public class main_page extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton but_send;
     private javax.swing.JLayeredPane contact_list_pan;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

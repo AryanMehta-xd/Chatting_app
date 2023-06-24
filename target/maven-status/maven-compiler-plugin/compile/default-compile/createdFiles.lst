@@ -6,8 +6,11 @@ com\mycompany\resources\main_page$4.class
 com\mycompany\resources\signup_page$3.class
 com\mycompany\dataPacks\Client.class
 com\mycompany\chatting_app\Chatting_App.class
+com\mycompany\resources\main_page$5.class
 com\mycompany\resources\signup_page$4.class
+com\mycompany\resources\contact_tab$1.class
 com\mycompany\resources\login_page$6.class
+com\mycompany\dataPacks\PanelClickListener.class
 com\mycompany\resources\login_page$1.class
 com\mycompany\resources\signup_page$6.class
 com\mycompany\dataPacks\check_friend_number.class
