@@ -23,6 +23,7 @@ public class contact_tab extends javax.swing.JPanel {
     public contact_tab(String username) {
         initComponents();
         this.username = username;
+        lbl_img.setSize(40,53);
         init();
     }
 
@@ -35,7 +36,6 @@ public class contact_tab extends javax.swing.JPanel {
             lbl_img.setText("Image not found");
         }
             lbl_status.setBackground(Color.GREEN);
-            setVisible(true);
     }
     
     /**

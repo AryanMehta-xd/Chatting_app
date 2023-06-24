@@ -1,7 +1,6 @@
 package com.mycompany.resources;
 
 import com.mycompany.dataPacks.*;
-import java.net.InetAddress;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import net.miginfocom.swing.MigLayout;
@@ -29,7 +28,7 @@ public class main_page extends javax.swing.JFrame {
     }
 
     public void init(){
-        setVisible(true);
+        
         but_send.setIcon(im.reSize(send_path, but_send));
         lbl_img.setIcon(im.getImage(lbl_img,username));
         
@@ -47,7 +46,7 @@ public class main_page extends javax.swing.JFrame {
             pan_showFriend.setVisible(true);
             pan_no_friend.setVisible(false);
         }
-        
+        setVisible(true);
     }
     
     private void showFriends(){
