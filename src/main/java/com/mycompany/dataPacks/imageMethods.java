@@ -66,7 +66,7 @@ public class imageMethods{
                 Image im = image.getImage();
                 Image myimg = im.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
                 
-               rimg = new  ImageIcon(myimg);
+                rimg = new  ImageIcon(myimg);
               
             }
         }catch(Exception e){

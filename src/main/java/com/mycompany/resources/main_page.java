@@ -1,21 +1,20 @@
 package com.mycompany.resources;
 
 import com.mycompany.dataPacks.*;
-import java.awt.Dimension;
 import java.net.InetAddress;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.swing.BoxLayout;
+import net.miginfocom.swing.MigLayout;
 
 public class main_page extends javax.swing.JFrame {
     
     //constructor Declaration
     imageMethods im = new imageMethods();
-    InetAddress inetAddress;
     PreparedStatement ps;
     ResultSet rs;
     db_conn db_var = new db_conn();
     Client cl;
+    check_friend_number chk = new check_friend_number();
     
     //global Variable
     private String send_path = "src/main/java/com/mycompany/Images/icons8_paper_plane_24px.png";
@@ -33,17 +32,38 @@ public class main_page extends javax.swing.JFrame {
         setVisible(true);
         but_send.setIcon(im.reSize(send_path, but_send));
         lbl_img.setIcon(im.getImage(lbl_img,username));
+        
+        contact_list_pan.setLayout(new MigLayout());
+        
         try {
             cl = new Client(username);
             cl.start();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(chk.friend_num(username)){
+            showFriends();
+            pan_showFriend.setVisible(true);
+            pan_no_friend.setVisible(false);
+        }
+        
+    }
+    
+    private void showFriends(){
+        try {
+            ps = db_var.db_Connection.prepareStatement("select * from friend_request where sender_username = ? and status = ?");
+            ps.setString(1, username);
+            ps.setString(2, "accepted");
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                contact_list_pan.add(new contact_tab(rs.getString("receiver_username")));
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        pan_showFriend.setVisible(true);
-        pan_no_friend.setVisible(false);
-        pan_displayFriend.add(new contact_tab(username));
-        pan_displayFriend.add(new contact_tab(username));
     }
     
     @SuppressWarnings("unchecked")
@@ -66,7 +86,8 @@ public class main_page extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         pan_showFriend = new javax.swing.JPanel();
         tf_search_user = new javax.swing.JTextField();
-        pan_displayFriend = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        contact_list_pan = new javax.swing.JLayeredPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -117,7 +138,7 @@ public class main_page extends javax.swing.JFrame {
         pan_noChatOpenLayout.setHorizontalGroup(
             pan_noChatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_noChatOpenLayout.createSequentialGroup()
-                .addContainerGap(326, Short.MAX_VALUE)
+                .addContainerGap(404, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(193, 193, 193))
         );
@@ -162,10 +183,10 @@ public class main_page extends javax.swing.JFrame {
             pan_chatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_chatOpenLayout.createSequentialGroup()
                 .addGroup(pan_chatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pan_chatOpenLayout.createSequentialGroup()
-                        .addComponent(tf_send, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_chatOpenLayout.createSequentialGroup()
+                        .addComponent(tf_send, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(but_send, javax.swing.GroupLayout.PREFERRED_SIZE, 47, Short.MAX_VALUE))
+                        .addComponent(but_send, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -193,17 +214,17 @@ public class main_page extends javax.swing.JFrame {
         pan_no_friend.setLayout(pan_no_friendLayout);
         pan_no_friendLayout.setHorizontalGroup(
             pan_no_friendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_no_friendLayout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
+            .addGroup(pan_no_friendLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         pan_no_friendLayout.setVerticalGroup(
             pan_no_friendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_no_friendLayout.createSequentialGroup()
-                .addGap(147, 147, 147)
+                .addGap(148, 148, 148)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
 
         pan_contact.add(pan_no_friend, "card2");
@@ -219,17 +240,38 @@ public class main_page extends javax.swing.JFrame {
             }
         });
 
-        pan_displayFriend.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        contact_list_pan.setBackground(new java.awt.Color(255, 255, 255));
+        contact_list_pan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        contact_list_pan.setOpaque(true);
+
+        javax.swing.GroupLayout contact_list_panLayout = new javax.swing.GroupLayout(contact_list_pan);
+        contact_list_pan.setLayout(contact_list_panLayout);
+        contact_list_panLayout.setHorizontalGroup(
+            contact_list_panLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        contact_list_panLayout.setVerticalGroup(
+            contact_list_panLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 447, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(contact_list_pan);
 
         javax.swing.GroupLayout pan_showFriendLayout = new javax.swing.GroupLayout(pan_showFriend);
         pan_showFriend.setLayout(pan_showFriendLayout);
         pan_showFriendLayout.setHorizontalGroup(
             pan_showFriendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_showFriendLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tf_search_user, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addGroup(pan_showFriendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pan_showFriendLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(tf_search_user, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
-            .addComponent(pan_displayFriend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pan_showFriendLayout.setVerticalGroup(
             pan_showFriendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +279,7 @@ public class main_page extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tf_search_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pan_displayFriend, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pan_contact.add(pan_showFriend, "card3");
@@ -248,9 +290,10 @@ public class main_page extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pan_top, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(pan_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pan_contact, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pan_msg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pan_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,15 +380,16 @@ public class main_page extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton but_send;
+    private javax.swing.JLayeredPane contact_list_pan;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_img;
     private javax.swing.JPanel pan_chatOpen;
     private javax.swing.JPanel pan_contact;
-    private javax.swing.JPanel pan_displayFriend;
     private javax.swing.JPanel pan_msg;
     private javax.swing.JPanel pan_noChatOpen;
     private javax.swing.JPanel pan_no_friend;
