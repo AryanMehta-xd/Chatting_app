@@ -15,8 +15,6 @@ public class contact_tab extends javax.swing.JPanel {
 
     private String username;
     
-    private PreparedStatement ps;
-    private ResultSet rs;
     db_conn db_var = new db_conn();
     imageMethods im = new imageMethods();
     
