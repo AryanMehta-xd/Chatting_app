@@ -2,6 +2,7 @@ package com.mycompany.dataPacks;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.net.Socket;
 
 public class Client extends Thread{
@@ -50,9 +51,28 @@ public class Client extends Thread{
             String rev_username = input.readUTF();
             String msg = input.readUTF();
             
+            if (msg.equals("user||disconnect")) {
+                closeConnection();
+                return;
+            }
+            
             callback.onMessageReceive(sender_username, rev_username, msg);
             
             System.out.println("Msg:"+msg+"\nfrom :"+sender_username);
+        }catch (EOFException e) {
+            System.out.println("Connection closed by the server.");
+            closeConnection();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void closeConnection(){
+        try {
+            if (socket != null && !socket.isClosed()) {
+                output.writeUTF("!logout");
+                socket.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

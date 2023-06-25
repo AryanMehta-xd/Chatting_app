@@ -1,8 +1,10 @@
 package com.mycompany.resources;
 
 import com.mycompany.dataPacks.*;
+import java.awt.Component;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
 
 public class main_page extends javax.swing.JFrame implements MessageReceivedCallbacbk{
@@ -33,6 +35,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         but_send.setIcon(im.reSize(send_path, but_send));
         lbl_img.setIcon(im.getImage(lbl_img,username));
         
+        but_logout.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_Logout_64px.png", but_logout));
+        
         contact_list_pan.setLayout(new MigLayout());
         
         try {
@@ -53,14 +57,15 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     
     @Override
     public void onMessageReceive(String sender, String rev, String msg) {
-        
-        tf_send.setText(msg);
-        lbl_username_chat.setText(sender);
-        
-        jLabel3.setIcon(im.getImage(lbl_img, sender));
-        
-        pan_chatOpen.setVisible(true);
-        pan_noChatOpen.setVisible(false);
+        for(Component component:contact_list_pan.getComponents()){
+            if(component instanceof contact_tab){
+                contact_tab con_tab = (contact_tab)component;
+                
+                if(con_tab.getReceiverName().equals(sender)){
+                    con_tab.setMsgLabelVisible(true);
+                }
+            }
+        }
     }
     
     private void showFriends(){
@@ -81,6 +86,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                         jLabel3.setIcon(im.getImage(jLabel3, user));
                         pan_chatOpen.setVisible(true);
                         pan_noChatOpen.setVisible(false);
+                        con_tab.setMsgLabelVisible(false);
                     }
                 });
                 
@@ -100,6 +106,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         pan_top = new javax.swing.JPanel();
         lbl_img = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        but_logout = new javax.swing.JButton();
         pan_msg = new javax.swing.JPanel();
         pan_noChatOpen = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -137,12 +145,39 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         jLabel2.setText("<html><p>|<br>|<br>|</p></html>");
         jLabel2.setOpaque(true);
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        but_logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_logoutActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(but_logout, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(but_logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout pan_topLayout = new javax.swing.GroupLayout(pan_top);
         pan_top.setLayout(pan_topLayout);
         pan_topLayout.setHorizontalGroup(
             pan_topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_topLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -151,6 +186,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             pan_topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbl_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pan_msg.setLayout(new java.awt.CardLayout());
@@ -402,8 +438,12 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
 
     private void but_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_sendActionPerformed
         msg = tf_send.getText();
-        cl.sendMessage(username, receiver_username, msg);
-        tf_send.setText("");
+        if(!msg.equals("")){
+            cl.sendMessage(username, receiver_username, msg);
+            tf_send.setText("");
+        }else{
+            JOptionPane.showMessageDialog(null, "Can't Send Empty Msg");
+        }
     }//GEN-LAST:event_but_sendActionPerformed
 
     private void tf_search_userKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_search_userKeyReleased
@@ -413,6 +453,12 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             e.printStackTrace();
         }
     }//GEN-LAST:event_tf_search_userKeyReleased
+
+    private void but_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_logoutActionPerformed
+        dispose();
+        cl.closeConnection();
+        new login_page();
+    }//GEN-LAST:event_but_logoutActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -454,6 +500,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton but_logout;
     private javax.swing.JButton but_send;
     private javax.swing.JLayeredPane contact_list_pan;
     private javax.swing.JLabel jLabel1;
@@ -464,6 +511,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_img;
     private javax.swing.JLabel lbl_username_chat;

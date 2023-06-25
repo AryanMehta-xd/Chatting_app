@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import com.mycompany.dataPacks.imageMethods;
-import java.awt.Font;
 
 /**
  *
