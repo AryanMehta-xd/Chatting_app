@@ -1,3 +1,4 @@
+com\mycompany\dataPacks\MessageReceivedCallbacbk.class
 com\mycompany\resources\main_page.class
 com\mycompany\resources\login_page$3.class
 com\mycompany\resources\contact_tab.class
@@ -6,7 +7,6 @@ com\mycompany\resources\main_page$4.class
 com\mycompany\resources\signup_page$3.class
 com\mycompany\dataPacks\Client.class
 com\mycompany\chatting_app\Chatting_App.class
-com\mycompany\resources\main_page$5.class
 com\mycompany\resources\signup_page$4.class
 com\mycompany\resources\contact_tab$1.class
 com\mycompany\resources\login_page$6.class
@@ -26,4 +26,5 @@ com\mycompany\resources\login_page$7.class
 com\mycompany\resources\login_page$2.class
 com\mycompany\dataPacks\imageMethods.class
 com\mycompany\resources\login_page$5.class
+com\mycompany\resources\contact_tab$2.class
 com\mycompany\resources\signup_page$5.class

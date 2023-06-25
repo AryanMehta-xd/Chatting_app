@@ -55,6 +55,14 @@ public class contact_tab extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                formMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                formMouseExited(evt);
+            }
+        });
 
         lbl_status.setBackground(new java.awt.Color(255, 255, 255));
         lbl_status.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -64,6 +72,12 @@ public class contact_tab extends javax.swing.JPanel {
         lbl_username.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_usernameMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_usernameMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbl_usernameMouseExited(evt);
             }
         });
 
@@ -102,6 +116,22 @@ public class contact_tab extends javax.swing.JPanel {
             listener.onPanelClick(username);
         }
     }//GEN-LAST:event_lbl_usernameMouseClicked
+
+    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
+        setBackground(Color.LIGHT_GRAY);
+    }//GEN-LAST:event_formMouseEntered
+
+    private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
+        setBackground(Color.WHITE);
+    }//GEN-LAST:event_formMouseExited
+
+    private void lbl_usernameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_usernameMouseEntered
+        setBackground(Color.LIGHT_GRAY);
+    }//GEN-LAST:event_lbl_usernameMouseEntered
+
+    private void lbl_usernameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_usernameMouseExited
+        setBackground(Color.WHITE);
+    }//GEN-LAST:event_lbl_usernameMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

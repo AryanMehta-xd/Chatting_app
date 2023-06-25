@@ -9,9 +9,11 @@ public class Client extends Thread{
     private DataOutputStream output;
     private DataInputStream input;
     private Socket socket;
+    private MessageReceivedCallbacbk callback;
     
-    public Client(String username){
-        this.username = username;
+    public Client(String user,MessageReceivedCallbacbk callB){
+        this.username = user;
+        this.callback = callB;
     }
 
     @Override
@@ -23,6 +25,9 @@ public class Client extends Thread{
             
             output.writeUTF(username);
             
+            while (true) {                
+                receiveMessage();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,12 +46,15 @@ public class Client extends Thread{
     
     public void receiveMessage(){
         try {
-            while (true) {                
-                
-            }
+            String sender_username = input.readUTF();
+            String rev_username = input.readUTF();
+            String msg = input.readUTF();
+            
+            callback.onMessageReceive(sender_username, rev_username, msg);
+            
+            System.out.println("Msg:"+msg+"\nfrom :"+sender_username);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
 }

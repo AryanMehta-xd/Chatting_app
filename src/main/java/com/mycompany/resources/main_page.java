@@ -3,10 +3,9 @@ package com.mycompany.resources;
 import com.mycompany.dataPacks.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
-public class main_page extends javax.swing.JFrame {
+public class main_page extends javax.swing.JFrame implements MessageReceivedCallbacbk{
     
     //constructor Declaration
     imageMethods im = new imageMethods();
@@ -21,6 +20,7 @@ public class main_page extends javax.swing.JFrame {
     private String username;
     private String msg;
     private String receiver_username;
+    private String[] full_received_msg;
     
     public main_page(String user) {
         initComponents();
@@ -36,7 +36,7 @@ public class main_page extends javax.swing.JFrame {
         contact_list_pan.setLayout(new MigLayout());
         
         try {
-            cl = new Client(username);
+            cl = new Client(username,this);
             cl.start();
         }
         catch (Exception e) {
@@ -48,6 +48,19 @@ public class main_page extends javax.swing.JFrame {
             pan_no_friend.setVisible(false);
         }
         setVisible(true);
+        
+    }
+    
+    @Override
+    public void onMessageReceive(String sender, String rev, String msg) {
+        
+        tf_send.setText(msg);
+        lbl_username_chat.setText(sender);
+        
+        jLabel3.setIcon(im.getImage(lbl_img, sender));
+        
+        pan_chatOpen.setVisible(true);
+        pan_noChatOpen.setVisible(false);
     }
     
     private void showFriends(){
@@ -63,6 +76,7 @@ public class main_page extends javax.swing.JFrame {
                 con_tab.setPanelListener(new PanelClickListener() {
                     @Override
                     public void onPanelClick(String user) {
+                        receiver_username = user;
                         lbl_username_chat.setText(user);
                         jLabel3.setIcon(im.getImage(jLabel3, user));
                         pan_chatOpen.setVisible(true);
@@ -88,7 +102,8 @@ public class main_page extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         pan_msg = new javax.swing.JPanel();
         pan_noChatOpen = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         pan_chatOpen = new javax.swing.JPanel();
         but_send = new javax.swing.JButton();
         tf_send = new javax.swing.JTextField();
@@ -96,6 +111,7 @@ public class main_page extends javax.swing.JFrame {
         pan_msg_det = new javax.swing.JPanel();
         lbl_username_chat = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         pan_contact = new javax.swing.JPanel();
         pan_no_friend = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -139,30 +155,46 @@ public class main_page extends javax.swing.JFrame {
 
         pan_msg.setLayout(new java.awt.CardLayout());
 
-        pan_noChatOpen.setBackground(new java.awt.Color(255, 102, 102));
+        pan_noChatOpen.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel4.setFont(new java.awt.Font("JetBrains Mono", 1, 16)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("No Chat Open");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout pan_noChatOpenLayout = new javax.swing.GroupLayout(pan_noChatOpen);
         pan_noChatOpen.setLayout(pan_noChatOpenLayout);
         pan_noChatOpenLayout.setHorizontalGroup(
             pan_noChatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_noChatOpenLayout.createSequentialGroup()
-                .addContainerGap(404, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(193, 193, 193))
+            .addGroup(pan_noChatOpenLayout.createSequentialGroup()
+                .addGap(189, 189, 189)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(252, Short.MAX_VALUE))
         );
         pan_noChatOpenLayout.setVerticalGroup(
             pan_noChatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_noChatOpenLayout.createSequentialGroup()
-                .addGap(166, 166, 166)
-                .addComponent(jButton1)
-                .addContainerGap(294, Short.MAX_VALUE))
+                .addGap(110, 110, 110)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(273, Short.MAX_VALUE))
         );
 
         pan_msg.add(pan_noChatOpen, "card2");
@@ -191,20 +223,37 @@ public class main_page extends javax.swing.JFrame {
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pan_msg_det.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 373, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pan_msg_det, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pan_msg_det, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(pan_msg_det, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 385, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout pan_chatOpenLayout = new javax.swing.GroupLayout(pan_chatOpen);
@@ -353,7 +402,8 @@ public class main_page extends javax.swing.JFrame {
 
     private void but_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_sendActionPerformed
         msg = tf_send.getText();
-        cl.sendMessage(username, "xyz", msg);
+        cl.sendMessage(username, receiver_username, msg);
+        tf_send.setText("");
     }//GEN-LAST:event_but_sendActionPerformed
 
     private void tf_search_userKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_search_userKeyReleased
@@ -363,11 +413,6 @@ public class main_page extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_tf_search_userKeyReleased
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pan_chatOpen.setVisible(true);
-        pan_noChatOpen.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -411,12 +456,14 @@ public class main_page extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton but_send;
     private javax.swing.JLayeredPane contact_list_pan;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_img;
     private javax.swing.JLabel lbl_username_chat;
@@ -431,4 +478,6 @@ public class main_page extends javax.swing.JFrame {
     private javax.swing.JTextField tf_search_user;
     private javax.swing.JTextField tf_send;
     // End of variables declaration//GEN-END:variables
+
+    
 }
