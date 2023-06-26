@@ -20,14 +20,16 @@ public class Client extends Thread{
     @Override
     public void run() {
         try {
-            socket = new Socket("192.168.0.102",9999);
+            socket = new Socket("192.168.0.105",9999);
             input = new DataInputStream(socket.getInputStream());
             output = new DataOutputStream(socket.getOutputStream());
             
             output.writeUTF(username);
             
-            while (true) {                
-                receiveMessage();
+            boolean isOnline = true;
+            
+            while (isOnline) {                
+                isOnline = receiveMessage();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,6 +38,7 @@ public class Client extends Thread{
     
     public void sendMessage(String sender,String receiver,String msg){
         try {
+            output.writeUTF("!sendMessage");
             output.writeUTF(sender);
             output.writeUTF(receiver);
             output.writeUTF(msg);
@@ -45,32 +48,40 @@ public class Client extends Thread{
         }
     }
     
-    public void receiveMessage(){
+    public boolean receiveMessage(){
         try {
             String sender_username = input.readUTF();
             String rev_username = input.readUTF();
             String msg = input.readUTF();
-            
-            if (msg.equals("user||disconnect")) {
-                closeConnection();
-                return;
-            }
-            
+
             callback.onMessageReceive(sender_username, rev_username, msg);
             
             System.out.println("Msg:"+msg+"\nfrom :"+sender_username);
         }catch (EOFException e) {
             System.out.println("Connection closed by the server.");
-            closeConnection();
+            return false;
         }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+    public void userLogout(){
+        try {
+            if (socket != null && !socket.isClosed()) {
+                output.writeUTF("!logout");
+                socket.close();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
-    public void closeConnection(){
+    public void userDisconnect(){
         try {
             if (socket != null && !socket.isClosed()) {
-                output.writeUTF("!logout");
+                output.writeUTF("!userdisconnect");
                 socket.close();
             }
         } catch (Exception e) {

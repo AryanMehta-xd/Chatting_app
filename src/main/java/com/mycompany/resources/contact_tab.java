@@ -21,7 +21,7 @@ public class contact_tab extends javax.swing.JPanel {
     public contact_tab(String username) {
         initComponents();
         this.username = username;
-        lbl_img.setSize(40,53);
+        lbl_img.setSize(40,58);
         init();
     }
 
@@ -33,7 +33,6 @@ public class contact_tab extends javax.swing.JPanel {
         } else {
             lbl_img.setText("Image not found");
         }
-            lbl_user_status.setText("Online");
             lbl_msg_num.setVisible(false);
     }
     
@@ -73,7 +72,6 @@ public class contact_tab extends javax.swing.JPanel {
                 formMouseExited(evt);
             }
         });
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_username.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
         lbl_username.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -87,22 +85,39 @@ public class contact_tab extends javax.swing.JPanel {
                 lbl_usernameMouseExited(evt);
             }
         });
-        add(lbl_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 7, 150, 30));
 
         lbl_img.setBackground(new java.awt.Color(255, 255, 255));
         lbl_img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lbl_img.setOpaque(true);
-        add(lbl_img, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 40, 58));
 
         lbl_user_status.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_user_status.setText("Online");
-        add(lbl_user_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 43, 70, -1));
 
         lbl_msg_num.setBackground(new java.awt.Color(0, 255, 0));
         lbl_msg_num.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_msg_num.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_msg_num.setOpaque(true);
-        add(lbl_msg_num, new org.netbeans.lib.awtextra.AbsoluteConstraints(203, 17, 20, 20));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbl_usernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_usernameMouseClicked
