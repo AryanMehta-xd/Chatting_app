@@ -20,7 +20,7 @@ public class Client extends Thread{
     @Override
     public void run() {
         try {
-            socket = new Socket("192.168.0.105",9999);
+            socket = new Socket("192.168.0.135",9999);
             input = new DataInputStream(socket.getInputStream());
             output = new DataOutputStream(socket.getOutputStream());
             

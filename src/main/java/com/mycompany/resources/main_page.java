@@ -16,6 +16,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private db_conn db_var = new db_conn();
     private Client cl;
     private check_friend_number chk = new check_friend_number();
+    private new_request_confirm new_req;
     
     //global Variable
     private String send_path = "src/main/java/com/mycompany/Images/icons8_paper_plane_24px.png";
@@ -23,11 +24,13 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private String msg;
     private String receiver_username;
     private String[] full_received_msg;
+    private boolean not_pan_status = false;
     
     public main_page(String user) {
         initComponents();
         this.username = user;
         init();
+        new_req = new new_request_confirm(username);
     }
 
     public void init(){
@@ -95,14 +98,23 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     }
     
     private void showFriends(){
+        String rev_user_name=null;
         try {
-            ps1 = db_var.db_Connection.prepareStatement("select * from friend_request where sender_username = ? and status = ?");
+            ps1 = db_var.db_Connection.prepareStatement("select * from friend_request where (sender_username = ? and status = ?) OR (receiver_username = ? and status = ?)");
             ps1.setString(1, username);
-            ps1.setString(2, "accepted");
+            ps1.setString(2, username);
+            ps1.setString(3, "accepted");
             rs1 = ps1.executeQuery();
             
             while(rs1.next()){
-                contact_tab con_tab = new contact_tab(rs1.getString("receiver_username"));
+                
+                if(rs1.getString("sender_username").equals(username)){
+                    rev_user_name = rs1.getString("receiver_username");
+                }else if(rs1.getString("receiver_username").equals(username)){
+                    rev_user_name = rs1.getString("sender_username");
+                }
+                
+                contact_tab con_tab = new contact_tab(rev_user_name);
                 
                 con_tab.setPanelListener(new PanelClickListener() {
                     @Override
@@ -190,6 +202,12 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         but_quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 but_quitActionPerformed(evt);
+            }
+        });
+
+        lbl_new_request.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_new_requestMouseClicked(evt);
             }
         });
 
@@ -513,17 +531,31 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private void but_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_logoutActionPerformed
         dispose();
         cl.userLogout();
+        new_req.dispose();
         new login_page();
     }//GEN-LAST:event_but_logoutActionPerformed
 
     private void but_quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_quitActionPerformed
         cl.userDisconnect();
+        new_req.dispose();
         dispose();
     }//GEN-LAST:event_but_quitActionPerformed
 
     private void lbl_add_new_friendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_add_new_friendMouseClicked
         new addFriend_main(username);
     }//GEN-LAST:event_lbl_add_new_friendMouseClicked
+
+    private void lbl_new_requestMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_new_requestMouseClicked
+        
+        if(not_pan_status==false){        
+            new_req.setLocationRelative(lbl_new_request);
+            new_req.setVisible(true);
+            not_pan_status = true;
+        }else{
+            new_req.dispose();
+            not_pan_status = false;
+        }
+    }//GEN-LAST:event_lbl_new_requestMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

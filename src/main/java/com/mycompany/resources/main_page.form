@@ -188,6 +188,9 @@
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbl_new_request">
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lbl_new_requestMouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbl_add_new_friend">
                   <Events>
