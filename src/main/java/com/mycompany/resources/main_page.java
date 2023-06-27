@@ -40,6 +40,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         
         contact_list_pan.setLayout(new MigLayout());
         
+        lbl_add_new_friend.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_Add_User_Group_Woman_Man_64px.png", lbl_add_new_friend));
+        
         try {
             cl = new Client(username,this);
             cl.start();
@@ -84,7 +86,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                     public void onPanelClick(String user) {
                         receiver_username = user;
                         lbl_username_chat.setText(user);
-                        jLabel3.setIcon(im.getImage(jLabel3, user));
+                        chat_rev_prof_image.setIcon(im.getImage(chat_rev_prof_image, user));
                         pan_chatOpen.setVisible(true);
                         pan_noChatOpen.setVisible(false);
                         con_tab.setMsgLabelVisible(false);
@@ -110,6 +112,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         jPanel5 = new javax.swing.JPanel();
         but_logout = new javax.swing.JButton();
         but_quit = new javax.swing.JButton();
+        lbl_new_request = new javax.swing.JLabel();
+        lbl_add_new_friend = new javax.swing.JLabel();
         pan_msg = new javax.swing.JPanel();
         pan_noChatOpen = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -120,7 +124,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         jPanel2 = new javax.swing.JPanel();
         pan_msg_det = new javax.swing.JPanel();
         lbl_username_chat = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        chat_rev_prof_image = new javax.swing.JLabel();
+        lbl_user_status = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         pan_contact = new javax.swing.JPanel();
         pan_no_friend = new javax.swing.JPanel();
@@ -163,6 +168,12 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             }
         });
 
+        lbl_add_new_friend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_add_new_friendMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -172,7 +183,11 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 .addComponent(but_quit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(but_logout, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_add_new_friend, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_new_request, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +195,9 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(but_quit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(but_logout, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
+                    .addComponent(but_logout, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(lbl_new_request, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_add_new_friend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -267,10 +284,13 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         pan_msg_det.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_username_chat.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
-        pan_msg_det.add(lbl_username_chat, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 6, 200, 38));
+        pan_msg_det.add(lbl_username_chat, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 6, 200, 20));
 
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        pan_msg_det.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
+        chat_rev_prof_image.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pan_msg_det.add(chat_rev_prof_image, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
+
+        lbl_user_status.setToolTipText("");
+        pan_msg_det.add(lbl_user_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 90, 20));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -476,6 +496,10 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         dispose();
     }//GEN-LAST:event_but_quitActionPerformed
 
+    private void lbl_add_new_friendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_add_new_friendMouseClicked
+        new addFriend_main(username);
+    }//GEN-LAST:event_lbl_add_new_friendMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -519,10 +543,10 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JButton but_logout;
     private javax.swing.JButton but_quit;
     private javax.swing.JButton but_send;
+    private javax.swing.JLabel chat_rev_prof_image;
     private javax.swing.JLayeredPane contact_list_pan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -530,7 +554,10 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_add_new_friend;
     private javax.swing.JLabel lbl_img;
+    private javax.swing.JLabel lbl_new_request;
+    private javax.swing.JLabel lbl_user_status;
     private javax.swing.JLabel lbl_username_chat;
     private javax.swing.JPanel pan_chatOpen;
     private javax.swing.JPanel pan_contact;

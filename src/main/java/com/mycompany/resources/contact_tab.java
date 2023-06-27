@@ -19,7 +19,7 @@ public class contact_tab extends javax.swing.JPanel {
     imageMethods im = new imageMethods();
     
     public contact_tab(String username) {
-        initComponents();
+       initComponents();
         this.username = username;
         lbl_img.setSize(40,58);
         init();
@@ -28,12 +28,15 @@ public class contact_tab extends javax.swing.JPanel {
     public void init(){
         lbl_username.setText(username);
         Icon icon = im.getImage(lbl_img, username);
+        lbl_msg_num.setSize(29,46);
         if (icon != null) {
             lbl_img.setIcon(icon);
         } else {
             lbl_img.setText("Image not found");
         }
+            lbl_msg_num.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_alarm_24px.png", lbl_msg_num));
             lbl_msg_num.setVisible(false);
+            
     }
     
     public void setPanelListener(PanelClickListener panelClickListener){
@@ -60,7 +63,6 @@ public class contact_tab extends javax.swing.JPanel {
         lbl_username = new javax.swing.JLabel();
         lbl_img = new javax.swing.JLabel();
         lbl_msg_num = new javax.swing.JLabel();
-        lbl_user_status = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -72,6 +74,7 @@ public class contact_tab extends javax.swing.JPanel {
                 formMouseExited(evt);
             }
         });
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_username.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
         lbl_username.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -85,50 +88,18 @@ public class contact_tab extends javax.swing.JPanel {
                 lbl_usernameMouseExited(evt);
             }
         });
+        add(lbl_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 7, 150, 46));
 
         lbl_img.setBackground(new java.awt.Color(255, 255, 255));
         lbl_img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lbl_img.setOpaque(true);
+        add(lbl_img, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 40, 58));
 
-        lbl_msg_num.setBackground(new java.awt.Color(0, 255, 0));
+        lbl_msg_num.setBackground(new java.awt.Color(255, 255, 255));
         lbl_msg_num.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_msg_num.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_msg_num.setOpaque(true);
-
-        lbl_user_status.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_user_status.setText("Online");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbl_user_status, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_user_status, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        add(lbl_msg_num, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 7, 29, 46));
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbl_usernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_usernameMouseClicked
@@ -157,7 +128,6 @@ public class contact_tab extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lbl_img;
     private javax.swing.JLabel lbl_msg_num;
-    private javax.swing.JLabel lbl_user_status;
     private javax.swing.JLabel lbl_username;
     // End of variables declaration//GEN-END:variables
 }
