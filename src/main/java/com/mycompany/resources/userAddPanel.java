@@ -1,5 +1,8 @@
 package com.mycompany.resources;
 
+import com.mycompany.dataPacks.imageMethods;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author Aryan Mehta
@@ -7,6 +10,9 @@ package com.mycompany.resources;
 public class userAddPanel extends javax.swing.JPanel {
 
     private String username;
+    private ActionListener buttonActionListener;
+    
+    imageMethods im = new imageMethods();
     
     public userAddPanel(String user) {
         initComponents();
@@ -16,8 +22,18 @@ public class userAddPanel extends javax.swing.JPanel {
     
     private void init(){
         lbl_friend_img.setSize(45,64);
+        lbl_username.setText(username);
+        lbl_friend_img.setIcon(im.getImage(lbl_friend_img, username));
     }
 
+    public void setActionListener(ActionListener actionListener){
+        this.buttonActionListener = actionListener;
+    }
+    
+    public String getUsername(){
+        return lbl_username.getText();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,60 +43,61 @@ public class userAddPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        lbl_friend_img = new javax.swing.JLabel();
         lbl_username = new javax.swing.JLabel();
         but_add_friend = new javax.swing.JButton();
+        lbl_friend_img = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        lbl_friend_img.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lbl_username.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
 
         but_add_friend.setBackground(new java.awt.Color(51, 51, 255));
-        but_add_friend.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        but_add_friend.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         but_add_friend.setForeground(new java.awt.Color(255, 255, 255));
         but_add_friend.setText("<html><p>Add<br>Friend</p><html>");
+        but_add_friend.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        but_add_friend.setOpaque(true);
+        but_add_friend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_add_friendActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lbl_friend_img, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(but_add_friend, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbl_friend_img, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(but_add_friend, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        lbl_friend_img.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lbl_friend_img, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(but_add_friend, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lbl_friend_img, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(but_add_friend, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void but_add_friendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_add_friendActionPerformed
+        if(buttonActionListener!=null){
+            buttonActionListener.actionPerformed(evt);
+        }
+    }//GEN-LAST:event_but_add_friendActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton but_add_friend;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_friend_img;
     private javax.swing.JLabel lbl_username;
     // End of variables declaration//GEN-END:variables

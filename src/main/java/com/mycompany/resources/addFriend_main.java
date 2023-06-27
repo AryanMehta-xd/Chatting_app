@@ -1,8 +1,17 @@
 package com.mycompany.resources;
 
 import com.mycompany.dataPacks.db_conn;
+import com.mycompany.dataPacks.imageMethods;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -14,8 +23,12 @@ public class addFriend_main extends javax.swing.JFrame {
     private String username;
     private String entered_text;
     
-    private PreparedStatement ps;
-    private ResultSet rs;
+    private int sts1,sts2;
+    
+    private PreparedStatement ps1,ps2;
+    private ResultSet rs1,rs2;
+    
+    private imageMethods im = new imageMethods();
     
     db_conn db_var = new db_conn();
     
@@ -27,7 +40,10 @@ public class addFriend_main extends javax.swing.JFrame {
 
     private void init(){
         pan_show_users.setLayout(new MigLayout());
-        addUsers();
+        btn_exit.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_cancel_24px.png", btn_exit));
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+        Container container = getContentPane();
+        ((JComponent) container).setBorder(border);
         setVisible(true);
     }
     
@@ -42,16 +58,27 @@ public class addFriend_main extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         tf_search_user = new javax.swing.JTextField();
+        btn_exit = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pan_show_users = new javax.swing.JLayeredPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         tf_search_user.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_search_userKeyReleased(evt);
+            }
+        });
+
+        btn_exit.setToolTipText("");
+        btn_exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_exitMouseClicked(evt);
             }
         });
 
@@ -63,13 +90,24 @@ public class addFriend_main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tf_search_user)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 8, Short.MAX_VALUE)
+                .addComponent(btn_exit, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tf_search_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        pan_show_users.setBackground(new java.awt.Color(255, 255, 255));
+        pan_show_users.setOpaque(true);
 
         javax.swing.GroupLayout pan_show_usersLayout = new javax.swing.GroupLayout(pan_show_users);
         pan_show_users.setLayout(pan_show_usersLayout);
@@ -79,7 +117,7 @@ public class addFriend_main extends javax.swing.JFrame {
         );
         pan_show_usersLayout.setVerticalGroup(
             pan_show_usersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 382, Short.MAX_VALUE)
+            .addGap(0, 412, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(pan_show_users);
@@ -88,18 +126,19 @@ public class addFriend_main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -108,29 +147,82 @@ public class addFriend_main extends javax.swing.JFrame {
 
     private void tf_search_userKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_search_userKeyReleased
         entered_text = tf_search_user.getText();
-        try {
-            ps = db_var.db_Connection.prepareStatement("select * from sign where username like ?");
-            ps.setString(1, entered_text + "%");
-            rs = ps.executeQuery();
+        
+        if(entered_text.equals("")){
+            pan_show_users.removeAll();
+            resetCon();
+        }else{
+            try {
+                ps1 = db_var.db_Connection.prepareStatement("select * from signup where username like ? or username like ?",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+                ps1.setString(1, entered_text + "%");
+                ps1.setString(2, entered_text + "%[^A-Za-z]");
+                rs1 = ps1.executeQuery();
             
-            while(rs.next()){
-                
+                while(rs1.next()){
+                    pan_show_users.removeAll();
+                    addUsers(rs1.getString("username"));
+                    resetCon();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        
+        
     }//GEN-LAST:event_tf_search_userKeyReleased
 
-    private void addUsers(){
-        for(int i=0;i<10;i++){
-            userAddPanel pan = new userAddPanel(""+i);
+    private void btn_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exitMouseClicked
+        dispose();
+    }//GEN-LAST:event_btn_exitMouseClicked
+
+    private void addUsers(String user){
+            userAddPanel pan = new userAddPanel(user);
+            
+            pan.setActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        String rev_user = pan.getUsername();
+                        
+                        ps2 = db_var.db_Connection.prepareStatement("select * from friend_request where sender_username = ? and receiver_username = ? and status = ?");
+                        ps2.setString(1, username);
+                        ps2.setString(2, rev_user);
+                        ps2.setString(3, "pending");
+                        rs2 = ps2.executeQuery();
+                        
+                        if(rs2.next()){
+                            JOptionPane.showMessageDialog(null, "Request Already Sent!");
+                        }else{
+                            ps2 = db_var.db_Connection.prepareStatement("insert into friend_request values(?,?,?)");
+                            ps2.setString(1, username);
+                            ps2.setString(2, rev_user);
+                            ps2.setString(3, "pending");
+                            sts1 = ps2.executeUpdate();
+                            
+                            if(sts1==1){
+                                JOptionPane.showMessageDialog(null, "Request Sent to "+rev_user);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Something Went Wrong!");
+                            }
+                        }
+                        
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                
+            });
+            
             pan_show_users.add(pan,"wrap");
-        }
     }
     
     private void resetCon(){
         pan_show_users.repaint();
         pan_show_users.revalidate();
+    }
+    
+    public void sendRequest(){
+        
     }
     
     public static void main(String args[]) {
@@ -166,6 +258,7 @@ public class addFriend_main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btn_exit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLayeredPane pan_show_users;

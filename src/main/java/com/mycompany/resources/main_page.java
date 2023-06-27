@@ -10,12 +10,12 @@ import net.miginfocom.swing.MigLayout;
 public class main_page extends javax.swing.JFrame implements MessageReceivedCallbacbk{
     
     //constructor Declaration
-    imageMethods im = new imageMethods();
-    PreparedStatement ps;
-    ResultSet rs;
-    db_conn db_var = new db_conn();
-    Client cl;
-    check_friend_number chk = new check_friend_number();
+    private imageMethods im = new imageMethods();
+    private PreparedStatement ps1,ps2;
+    private ResultSet rs1,rs2;
+    private db_conn db_var = new db_conn();
+    private Client cl;
+    private check_friend_number chk = new check_friend_number();
     
     //global Variable
     private String send_path = "src/main/java/com/mycompany/Images/icons8_paper_plane_24px.png";
@@ -41,6 +41,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         contact_list_pan.setLayout(new MigLayout());
         
         lbl_add_new_friend.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_Add_User_Group_Woman_Man_64px.png", lbl_add_new_friend));
+        
+        checkRequestStatus();
         
         try {
             cl = new Client(username,this);
@@ -71,15 +73,36 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         }
     }
     
+    private void checkRequestStatus(){
+        try {
+            ps2 = db_var.db_Connection.prepareStatement("select * from friend_request where receiver_username = ? and status = ?",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            ps2.setString(1, username);
+            ps2.setString(2, "pending");
+            rs2 = ps2.executeQuery();
+            
+            if(rs2.next()){
+                lbl_new_request.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_alarm_24px_2.png", lbl_new_request));
+                rs2.first();
+                //while (rs2.next()) {                    
+                //}
+            }else{
+                lbl_new_request.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_bell_24px.png", lbl_new_request));
+            }
+            pan_top_buts.revalidate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void showFriends(){
         try {
-            ps = db_var.db_Connection.prepareStatement("select * from friend_request where sender_username = ? and status = ?");
-            ps.setString(1, username);
-            ps.setString(2, "accepted");
-            rs = ps.executeQuery();
+            ps1 = db_var.db_Connection.prepareStatement("select * from friend_request where sender_username = ? and status = ?");
+            ps1.setString(1, username);
+            ps1.setString(2, "accepted");
+            rs1 = ps1.executeQuery();
             
-            while(rs.next()){
-                contact_tab con_tab = new contact_tab(rs.getString("receiver_username"));
+            while(rs1.next()){
+                contact_tab con_tab = new contact_tab(rs1.getString("receiver_username"));
                 
                 con_tab.setPanelListener(new PanelClickListener() {
                     @Override
@@ -109,7 +132,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         pan_top = new javax.swing.JPanel();
         lbl_img = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        pan_top_buts = new javax.swing.JPanel();
         but_logout = new javax.swing.JButton();
         but_quit = new javax.swing.JButton();
         lbl_new_request = new javax.swing.JLabel();
@@ -153,15 +176,17 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         jLabel2.setText("<html><p>|<br>|<br>|</p></html>");
         jLabel2.setOpaque(true);
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pan_top_buts.setBackground(new java.awt.Color(102, 204, 255));
+        pan_top_buts.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        but_logout.setBackground(new java.awt.Color(102, 204, 255));
         but_logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 but_logoutActionPerformed(evt);
             }
         });
 
+        but_quit.setBackground(new java.awt.Color(102, 204, 255));
         but_quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 but_quitActionPerformed(evt);
@@ -174,11 +199,11 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             }
         });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout pan_top_butsLayout = new javax.swing.GroupLayout(pan_top_buts);
+        pan_top_buts.setLayout(pan_top_butsLayout);
+        pan_top_butsLayout.setHorizontalGroup(
+            pan_top_butsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_top_butsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(but_quit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -189,11 +214,11 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 .addComponent(lbl_new_request, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        pan_top_butsLayout.setVerticalGroup(
+            pan_top_butsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_top_butsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pan_top_butsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(but_quit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(but_logout, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                     .addComponent(lbl_new_request, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -206,7 +231,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         pan_topLayout.setHorizontalGroup(
             pan_topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_topLayout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pan_top_buts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -216,7 +241,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             pan_topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbl_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pan_top_buts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pan_msg.setLayout(new java.awt.CardLayout());
@@ -552,7 +577,6 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_add_new_friend;
     private javax.swing.JLabel lbl_img;
@@ -567,6 +591,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JPanel pan_no_friend;
     private javax.swing.JPanel pan_showFriend;
     private javax.swing.JPanel pan_top;
+    private javax.swing.JPanel pan_top_buts;
     private javax.swing.JTextField tf_search_user;
     private javax.swing.JTextField tf_send;
     // End of variables declaration//GEN-END:variables
