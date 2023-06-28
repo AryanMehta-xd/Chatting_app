@@ -10,8 +10,8 @@ com\mycompany\resources\login_page$6.class
 com\mycompany\resources\addFriend_main$2.class
 com\mycompany\resources\request_status_pan$2.class
 com\mycompany\resources\signup_page$6.class
-com\mycompany\dataPacks\check_friend_number.class
 com\mycompany\dataPacks\db_conn.class
+com\mycompany\dataPacks\db_friend_queries.class
 com\mycompany\resources\main_page$2.class
 com\mycompany\resources\main_page$3.class
 com\mycompany\resources\addFriend_main.class

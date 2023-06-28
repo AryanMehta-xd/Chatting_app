@@ -10,7 +10,7 @@ public class db_conn {
     
     public db_conn(){
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             db_Connection = DriverManager.getConnection(db_connect,db_user,db_pass);
         } catch (Exception e) {
             e.printStackTrace();
