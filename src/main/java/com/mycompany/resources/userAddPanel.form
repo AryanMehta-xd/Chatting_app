@@ -29,7 +29,7 @@
           <Group type="102" attributes="0">
               <Component id="lbl_friend_img" min="-2" pref="45" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lbl_username" min="-2" pref="160" max="-2" attributes="0"/>
+              <Component id="lbl_username" min="-2" pref="154" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="but_add_friend" min="-2" pref="57" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
