@@ -1,6 +1,7 @@
 package com.mycompany.resources;
 
 import com.mycompany.dataPacks.db_conn;
+import com.mycompany.dataPacks.db_friend_queries;
 import com.mycompany.dataPacks.imageMethods;
 import java.awt.Color;
 import java.awt.Container;
@@ -25,10 +26,11 @@ public class addFriend_main extends javax.swing.JFrame {
     
     private int sts1,sts2;
     
-    private PreparedStatement ps1,ps2;
-    private ResultSet rs1,rs2;
+    private PreparedStatement ps1,ps2,ps3;
+    private ResultSet rs1,rs2,rs3;
     
     private imageMethods im = new imageMethods();
+    private db_friend_queries db_friend = new db_friend_queries();
     
     db_conn db_var = new db_conn();
     
@@ -88,7 +90,7 @@ public class addFriend_main extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tf_search_user)
+                .addComponent(tf_search_user, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -113,7 +115,7 @@ public class addFriend_main extends javax.swing.JFrame {
         pan_show_users.setLayout(pan_show_usersLayout);
         pan_show_usersLayout.setHorizontalGroup(
             pan_show_usersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 303, Short.MAX_VALUE)
         );
         pan_show_usersLayout.setVerticalGroup(
             pan_show_usersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,39 +180,48 @@ public class addFriend_main extends javax.swing.JFrame {
     private void addUsers(String user){
             userAddPanel pan = new userAddPanel(user);
             
+            if(db_friend.check_if_friend_sender(username, user)||db_friend.check_if_friend_rev(username, user)){
+                pan.setBtnText("<html><p>Already<br>Friend</p></html>");
+            }
+            
             pan.setActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
                         String rev_user = pan.getUsername();
                         
-                        ps2 = db_var.db_Connection.prepareStatement("select * from friend_request where sender_username = ? and receiver_username = ? and status = ?");
-                        ps2.setString(1, username);
-                        ps2.setString(2, rev_user);
-                        ps2.setString(3, "pending");
-                        rs2 = ps2.executeQuery();
-                        
-                        if(rs2.next()){
-                            JOptionPane.showMessageDialog(null, "Request Already Sent!");
+                        if(pan.getBtnText().equals("<html><p>Already<br>Friend</p></html>")){
+                            JOptionPane.showMessageDialog(null, "Already Friend");
                         }else{
-                            ps2 = db_var.db_Connection.prepareStatement("insert into friend_request values(?,?,?)");
+                            ps2 = db_var.db_Connection.prepareStatement("select * from friend_request where sender_username = ? and receiver_username = ? and status = ?");
                             ps2.setString(1, username);
                             ps2.setString(2, rev_user);
                             ps2.setString(3, "pending");
-                            sts1 = ps2.executeUpdate();
-                            
-                            if(sts1==1){
-                                JOptionPane.showMessageDialog(null, "Request Sent to "+rev_user);
+                            rs2 = ps2.executeQuery();
+                        
+                            if(rs2.next()){
+                                JOptionPane.showMessageDialog(null, "Request Already Sent!");
+                                pan.setBtnText("<html><p>Request<br>Sent</p></html>");
                             }else{
-                                JOptionPane.showMessageDialog(null, "Something Went Wrong!");
+                                ps2 = db_var.db_Connection.prepareStatement("insert into friend_request values(?,?,?)");
+                                ps2.setString(1, username);
+                                ps2.setString(2, rev_user);
+                                ps2.setString(3, "pending");
+                                sts1 = ps2.executeUpdate();
+                            
+                                if(sts1==1){
+                                    JOptionPane.showMessageDialog(null, "Request Sent to "+rev_user);
+                                    pan.setBtnText("<html><p>Request<br>Sent</p></html>");
+                                    pan.revalidate();
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "Something Went Wrong!");
+                                }
                             }
                         }
-                        
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 }
-                
             });
             
             pan_show_users.add(pan,"wrap");

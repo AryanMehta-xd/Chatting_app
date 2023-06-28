@@ -15,7 +15,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private ResultSet rs1,rs2,rs3;
     private db_conn db_var = new db_conn();
     private Client cl;
-    private check_friend_number chk = new check_friend_number();
+    private db_friend_queries chk = new db_friend_queries();
     private new_request_confirm new_req;
     
     //global Variable
@@ -82,7 +82,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         while (isVisible()) {
             checkRequestStatus();
             try {
-                Thread.sleep(3000); // 1 second interval
+                Thread.sleep(2000); 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -56,7 +56,6 @@ public class userAddPanel extends javax.swing.JPanel {
         but_add_friend.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         but_add_friend.setForeground(new java.awt.Color(255, 255, 255));
         but_add_friend.setText("<html><p>Add<br>Friend</p><html>");
-        but_add_friend.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         but_add_friend.setOpaque(true);
         but_add_friend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,8 +74,8 @@ public class userAddPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(but_add_friend, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(but_add_friend, javax.swing.GroupLayout.PREFERRED_SIZE, 71, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,7 +94,14 @@ public class userAddPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_but_add_friendActionPerformed
 
-
+    public String getBtnText(){
+        return but_add_friend.getText();
+    }
+    
+    public void setBtnText(String text){
+        but_add_friend.setText(text);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton but_add_friend;
     private javax.swing.JLabel lbl_friend_img;
