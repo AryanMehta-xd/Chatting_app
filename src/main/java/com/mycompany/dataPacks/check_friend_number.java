@@ -9,29 +9,37 @@ import java.sql.ResultSet;
  */
 public class check_friend_number {
 
-    private PreparedStatement ps;
-    private ResultSet rs;
+    private PreparedStatement ps1,ps2;
+    private ResultSet rs1,rs2;
+    private boolean status;
     
     db_conn db_var = new db_conn();
     
-    public boolean friend_num(String username){
-        boolean status = true;
+    public boolean friend_num_sender(String username){
         try {
-            ps = db_var.db_Connection.prepareStatement("select receiver_username from friend_request where sender_username = ? and status = ?");
-            ps.setString(1, username);
-            ps.setString(2, "accepted");
-            rs = ps.executeQuery();
+            ps1 = db_var.db_Connection.prepareStatement("select receiver_username from friend_request where sender_username = ? and status = ?");
+            ps1.setString(1, username);
+            ps1.setString(2, "accepted");
+            rs1 = ps1.executeQuery();
             
-            if(rs.next()){
-                status = true;
-            }else{
-                status = false;
-            }
-        
+            status = rs1.next();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return status;
     }
     
+    public boolean friend_num_receiver(String username){
+        try {
+            ps1 = db_var.db_Connection.prepareStatement("select sender_username from friend_request where receiver_username = ? and status = ?");
+            ps1.setString(1, username);
+            ps1.setString(2, "accepted");
+            rs1 = ps1.executeQuery();
+            
+            status = rs1.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
 }

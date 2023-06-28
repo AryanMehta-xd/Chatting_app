@@ -11,8 +11,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     
     //constructor Declaration
     private imageMethods im = new imageMethods();
-    private PreparedStatement ps1,ps2;
-    private ResultSet rs1,rs2;
+    private PreparedStatement ps1,ps2,ps3;
+    private ResultSet rs1,rs2,rs3;
     private db_conn db_var = new db_conn();
     private Client cl;
     private check_friend_number chk = new check_friend_number();
@@ -20,11 +20,12 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     
     //global Variable
     private String send_path = "src/main/java/com/mycompany/Images/icons8_paper_plane_24px.png";
-    private String username;
+    private String username;    
     private String msg;
     private String receiver_username;
     private String[] full_received_msg;
     private boolean not_pan_status = false;
+    private boolean notification_status;
     
     public main_page(String user) {
         initComponents();
@@ -54,7 +55,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         catch (Exception e) {
             e.printStackTrace();
         }
-        if(chk.friend_num(username)){
+        
+        if(chk.friend_num_sender(username)||chk.friend_num_receiver(username)){
             showFriends();
             pan_showFriend.setVisible(true);
             pan_no_friend.setVisible(false);
@@ -76,6 +78,17 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         }
     }
     
+    Thread methodThread = new Thread(() -> {
+        while (isVisible()) {
+            checkRequestStatus();
+            try {
+                Thread.sleep(3000); // 1 second interval
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    });
+    
     private void checkRequestStatus(){
         try {
             ps2 = db_var.db_Connection.prepareStatement("select * from friend_request where receiver_username = ? and status = ?",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
@@ -85,11 +98,10 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             
             if(rs2.next()){
                 lbl_new_request.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_alarm_24px_2.png", lbl_new_request));
-                rs2.first();
-                //while (rs2.next()) {                    
-                //}
+                notification_status = true;
             }else{
                 lbl_new_request.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_bell_24px.png", lbl_new_request));
+                notification_status = false;
             }
             pan_top_buts.revalidate();
         } catch (Exception e) {
@@ -98,39 +110,24 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     }
     
     private void showFriends(){
-        String rev_user_name=null;
         try {
-            ps1 = db_var.db_Connection.prepareStatement("select * from friend_request where (sender_username = ? and status = ?) OR (receiver_username = ? and status = ?)");
+            ps1 = db_var.db_Connection.prepareStatement("select receiver_username from friend_request where sender_username = ? and status = ?");
             ps1.setString(1, username);
-            ps1.setString(2, username);
-            ps1.setString(3, "accepted");
+            ps1.setString(2, "accepted");
             rs1 = ps1.executeQuery();
             
             while(rs1.next()){
-                
-                if(rs1.getString("sender_username").equals(username)){
-                    rev_user_name = rs1.getString("receiver_username");
-                }else if(rs1.getString("receiver_username").equals(username)){
-                    rev_user_name = rs1.getString("sender_username");
-                }
-                
-                contact_tab con_tab = new contact_tab(rev_user_name);
-                
-                con_tab.setPanelListener(new PanelClickListener() {
-                    @Override
-                    public void onPanelClick(String user) {
-                        receiver_username = user;
-                        lbl_username_chat.setText(user);
-                        chat_rev_prof_image.setIcon(im.getImage(chat_rev_prof_image, user));
-                        pan_chatOpen.setVisible(true);
-                        pan_noChatOpen.setVisible(false);
-                        con_tab.setMsgLabelVisible(false);
-                    }
-                });
-                
-                contact_list_pan.add(con_tab,"wrap");
+                addPanels(rs1.getString("receiver_username"));
             }
             
+            ps3 = db_var.db_Connection.prepareStatement("select sender_username from friend_request where receiver_username = ? and status = ?");
+            ps3.setString(1, username);
+            ps3.setString(2, "accepted");
+            rs3 = ps3.executeQuery();
+            
+            while(rs3.next()){
+                addPanels(rs3.getString("sender_username"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -520,6 +517,24 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         }
     }//GEN-LAST:event_but_sendActionPerformed
 
+    private void addPanels(String user_name){
+        contact_tab con_tab = new contact_tab(user_name);
+                
+                con_tab.setPanelListener(new PanelClickListener() {
+                    @Override
+                    public void onPanelClick(String user) {
+                        receiver_username = user;
+                        lbl_username_chat.setText(user);
+                        chat_rev_prof_image.setIcon(im.getImage(chat_rev_prof_image, user));
+                        pan_chatOpen.setVisible(true);
+                        pan_noChatOpen.setVisible(false);
+                        con_tab.setMsgLabelVisible(false);
+                    }
+                });
+                
+                contact_list_pan.add(con_tab,"wrap");
+    }
+    
     private void tf_search_userKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_search_userKeyReleased
         try {
             
@@ -546,14 +561,19 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     }//GEN-LAST:event_lbl_add_new_friendMouseClicked
 
     private void lbl_new_requestMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_new_requestMouseClicked
-        
-        if(not_pan_status==false){        
-            new_req.setLocationRelative(lbl_new_request);
-            new_req.setVisible(true);
-            not_pan_status = true;
+        if(notification_status==true){
+            if(not_pan_status==false){        
+                new_req.setLocationRelative(lbl_new_request);
+                new_req.setVisible(true);
+                not_pan_status = true;
+                lbl_new_request.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_bell_24px.png", lbl_new_request));
+                pan_top_buts.revalidate();
+            }else{
+                new_req.dispose();
+                not_pan_status = false;
+            }
         }else{
-            new_req.dispose();
-            not_pan_status = false;
+            JOptionPane.showMessageDialog(null, "No new Notifications!");
         }
     }//GEN-LAST:event_lbl_new_requestMouseClicked
 
