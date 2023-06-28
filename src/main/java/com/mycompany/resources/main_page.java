@@ -60,9 +60,9 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             showFriends();
             pan_showFriend.setVisible(true);
             pan_no_friend.setVisible(false);
-        }
+        } 
         setVisible(true);
-        
+        methodThread.start();
     }
     
     @Override
@@ -78,7 +78,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         }
     }
     
-    Thread methodThread = new Thread(() -> {
+    private Thread methodThread = new Thread(() -> {
         while (isVisible()) {
             checkRequestStatus();
             try {
