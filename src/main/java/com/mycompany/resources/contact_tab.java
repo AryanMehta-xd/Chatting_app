@@ -74,7 +74,6 @@ public class contact_tab extends javax.swing.JPanel {
                 formMouseExited(evt);
             }
         });
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_username.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
         lbl_username.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -88,18 +87,37 @@ public class contact_tab extends javax.swing.JPanel {
                 lbl_usernameMouseExited(evt);
             }
         });
-        add(lbl_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 7, 150, 46));
 
         lbl_img.setBackground(new java.awt.Color(255, 255, 255));
         lbl_img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lbl_img.setOpaque(true);
-        add(lbl_img, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 40, 58));
 
         lbl_msg_num.setBackground(new java.awt.Color(255, 255, 255));
         lbl_msg_num.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_msg_num.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_msg_num.setOpaque(true);
-        add(lbl_msg_num, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 7, 29, 46));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbl_usernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_usernameMouseClicked
