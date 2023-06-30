@@ -36,12 +36,13 @@ public class Client extends Thread{
         }
     }
     
-    public void sendMessage(String sender,String receiver,String msg){
+    public void sendMessage(String sender,String receiver,String msg,String time){
         try {
             output.writeUTF("!sendMessage");
             output.writeUTF(sender);
             output.writeUTF(receiver);
             output.writeUTF(msg);
+            output.writeUTF(time);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,10 +54,11 @@ public class Client extends Thread{
             String sender_username = input.readUTF();
             String rev_username = input.readUTF();
             String msg = input.readUTF();
+            String msg_time = input.readUTF();
 
-            callback.onMessageReceive(sender_username, rev_username, msg);
+            callback.onMessageReceive(sender_username, rev_username, msg,msg_time);
             
-            System.out.println("Msg:"+msg+"\nfrom :"+sender_username);
+            System.out.println("Msg:"+msg+"\nfrom :"+sender_username+"\nOn :"+msg_time);
         }catch (EOFException e) {
             System.out.println("Connection closed by the server.");
             return false;

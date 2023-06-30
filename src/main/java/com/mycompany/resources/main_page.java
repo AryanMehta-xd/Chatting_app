@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private Client cl;
     private db_friend_queries chk = new db_friend_queries();
     private new_request_confirm new_req;
+    private LocalDateTime localDateTime;
     
     //global Variable
     private String send_path = "src/main/java/com/mycompany/Images/icons8_paper_plane_24px.png";
@@ -29,6 +31,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private String msg;
     private String receiver_username;
     private String[] full_received_msg;
+    private String msg_time;
     private boolean not_pan_status = false;
     private boolean notification_status;
     
@@ -76,7 +79,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     }
     
     @Override
-    public void onMessageReceive(String sender, String rev, String msg) {
+    public void onMessageReceive(String sender, String rev, String msg,String msg_t) {
         for(Component component:contact_list_pan.getComponents()){
             if(component instanceof contact_tab){
                 contact_tab con_tab = (contact_tab)component;
@@ -168,7 +171,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         lbl_username_chat = new javax.swing.JLabel();
         chat_rev_prof_image = new javax.swing.JLabel();
         lbl_user_status = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        pan_chat_body = new javax.swing.JPanel();
         pan_contact = new javax.swing.JPanel();
         pan_showFriend = new javax.swing.JPanel();
         tf_search_user = new javax.swing.JTextField();
@@ -234,7 +237,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 .addComponent(but_quit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(but_logout, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 714, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_add_new_friend, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lbl_new_request, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,8 +289,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +307,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             .addGroup(pan_noChatOpenLayout.createSequentialGroup()
                 .addGap(189, 189, 189)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
         pan_noChatOpenLayout.setVerticalGroup(
             pan_noChatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,16 +346,16 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         lbl_user_status.setToolTipText("");
         pan_msg_det.add(lbl_user_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 90, 20));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        pan_chat_body.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pan_chat_bodyLayout = new javax.swing.GroupLayout(pan_chat_body);
+        pan_chat_body.setLayout(pan_chat_bodyLayout);
+        pan_chat_bodyLayout.setHorizontalGroup(
+            pan_chat_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pan_chat_bodyLayout.setVerticalGroup(
+            pan_chat_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 373, Short.MAX_VALUE)
         );
 
@@ -364,7 +367,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pan_msg_det, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pan_chat_body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -372,7 +375,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(pan_msg_det, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pan_chat_body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -455,7 +458,9 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(but_ref)
                 .addContainerGap(10, Short.MAX_VALUE))
-            .addComponent(jScrollPane1)
+            .addGroup(pan_showFriendLayout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         pan_showFriendLayout.setVerticalGroup(
             pan_showFriendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -535,7 +540,9 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private void but_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_sendActionPerformed
         msg = tf_send.getText();
         if(!msg.equals("")){
-            cl.sendMessage(username, receiver_username, msg);
+            localDateTime = LocalDateTime.now();
+            msg_time = String.valueOf(localDateTime.getHour()+":"+localDateTime.getMinute());
+            cl.sendMessage(username, receiver_username, msg,msg_time);
             tf_send.setText("");
         }else{
             JOptionPane.showMessageDialog(null, "Can't Send Empty Msg");
@@ -658,7 +665,6 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_add_new_friend;
@@ -667,6 +673,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JLabel lbl_user_status;
     private javax.swing.JLabel lbl_username_chat;
     private javax.swing.JPanel pan_chatOpen;
+    private javax.swing.JPanel pan_chat_body;
     private javax.swing.JPanel pan_contact;
     private javax.swing.JPanel pan_msg;
     private javax.swing.JPanel pan_msg_det;
