@@ -73,9 +73,21 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         Container container = getContentPane();
         ((JComponent) container).setBorder(border); 
         
+        pan_chat_body.setLayout(new MigLayout("fillx"));
+        addSendItem("gooood morning");
+        
         setVisible(true);
         methodThread.start();
     }
+    
+    public void addSendItem(String msg){
+        chat_left item = new chat_left();
+        item.setText(msg);
+        pan_chat_body.add(item,"wrap");
+        pan_chat_body.repaint();
+        pan_chat_body.revalidate();
+    }
+    
     
     @Override
     public void onMessageReceive(String sender, String rev, String msg,String msg_t) {
@@ -315,7 +327,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             .addGroup(pan_noChatOpenLayout.createSequentialGroup()
                 .addGap(110, 110, 110)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(273, Short.MAX_VALUE))
+                .addContainerGap(279, Short.MAX_VALUE))
         );
 
         pan_msg.add(pan_noChatOpen, "card2");
@@ -357,7 +369,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         );
         pan_chat_bodyLayout.setVerticalGroup(
             pan_chat_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 373, Short.MAX_VALUE)
+            .addGap(0, 385, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -377,7 +389,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 .addComponent(pan_msg_det, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pan_chat_body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout pan_chatOpenLayout = new javax.swing.GroupLayout(pan_chatOpen);
@@ -434,7 +446,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         );
         contact_list_panLayout.setVerticalGroup(
             contact_list_panLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 447, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(contact_list_pan);
@@ -471,7 +483,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                     .addComponent(tf_search_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(but_ref, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE))
         );
 
         pan_contact.add(pan_showFriend, "card3");
@@ -496,7 +508,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             .addGroup(pan_no_friendLayout.createSequentialGroup()
                 .addGap(149, 149, 149)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(197, Short.MAX_VALUE))
+                .addContainerGap(203, Short.MAX_VALUE))
         );
 
         pan_contact.add(pan_no_friend, "card2");
