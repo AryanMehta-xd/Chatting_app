@@ -36,6 +36,7 @@ public class chatItem extends javax.swing.JPanel {
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        txt.setFont(new java.awt.Font("JetBrains Mono", 0, 14)); // NOI18N
         add(txt);
     }// </editor-fold>//GEN-END:initComponents
 
