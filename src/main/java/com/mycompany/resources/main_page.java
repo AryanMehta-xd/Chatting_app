@@ -1,5 +1,6 @@
 package com.mycompany.resources;
 
+import com.mycompany.SwingItems.ScrollBar;
 import com.mycompany.dataPacks.*;
 import java.awt.Color;
 import java.awt.Component;
@@ -73,21 +74,10 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         Container container = getContentPane();
         ((JComponent) container).setBorder(border); 
         
-        pan_chat_body.setLayout(new MigLayout("fillx"));
-        addSendItem("gooood morning");
         
         setVisible(true);
         methodThread.start();
     }
-    
-    public void addSendItem(String msg){
-        chat_left item = new chat_left();
-        item.setText(msg);
-        pan_chat_body.add(item,"wrap");
-        pan_chat_body.repaint();
-        pan_chat_body.revalidate();
-    }
-    
     
     @Override
     public void onMessageReceive(String sender, String rev, String msg,String msg_t) {
@@ -152,6 +142,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             while(rs3.next()){
                 addPanels(rs3.getString("sender_username"));
             }
+            sp.setVerticalScrollBar(new ScrollBar());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,11 +173,11 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         lbl_username_chat = new javax.swing.JLabel();
         chat_rev_prof_image = new javax.swing.JLabel();
         lbl_user_status = new javax.swing.JLabel();
-        pan_chat_body = new javax.swing.JPanel();
+        chat_body = new com.mycompany.resources.chat_body();
         pan_contact = new javax.swing.JPanel();
         pan_showFriend = new javax.swing.JPanel();
         tf_search_user = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        sp = new javax.swing.JScrollPane();
         contact_list_pan = new javax.swing.JLayeredPane();
         but_ref = new javax.swing.JButton();
         pan_no_friend = new javax.swing.JPanel();
@@ -320,14 +311,14 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             .addGroup(pan_noChatOpenLayout.createSequentialGroup()
                 .addGap(189, 189, 189)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
         pan_noChatOpenLayout.setVerticalGroup(
             pan_noChatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_noChatOpenLayout.createSequentialGroup()
                 .addGap(110, 110, 110)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(279, Short.MAX_VALUE))
+                .addContainerGap(322, Short.MAX_VALUE))
         );
 
         pan_msg.add(pan_noChatOpen, "card2");
@@ -348,48 +339,44 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
 
         pan_msg_det.setBackground(new java.awt.Color(255, 255, 255));
         pan_msg_det.setPreferredSize(new java.awt.Dimension(262, 50));
-        pan_msg_det.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_username_chat.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
-        pan_msg_det.add(lbl_username_chat, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 6, 200, 20));
 
         chat_rev_prof_image.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        pan_msg_det.add(chat_rev_prof_image, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
         lbl_user_status.setToolTipText("");
-        pan_msg_det.add(lbl_user_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 90, 20));
 
-        pan_chat_body.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout pan_chat_bodyLayout = new javax.swing.GroupLayout(pan_chat_body);
-        pan_chat_body.setLayout(pan_chat_bodyLayout);
-        pan_chat_bodyLayout.setHorizontalGroup(
-            pan_chat_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout pan_msg_detLayout = new javax.swing.GroupLayout(pan_msg_det);
+        pan_msg_det.setLayout(pan_msg_detLayout);
+        pan_msg_detLayout.setHorizontalGroup(
+            pan_msg_detLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_msg_detLayout.createSequentialGroup()
+                .addComponent(chat_rev_prof_image, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(pan_msg_detLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_username_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pan_msg_detLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(lbl_user_status, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
-        pan_chat_bodyLayout.setVerticalGroup(
-            pan_chat_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 385, Short.MAX_VALUE)
+        pan_msg_detLayout.setVerticalGroup(
+            pan_msg_detLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(chat_rev_prof_image, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_msg_detLayout.createSequentialGroup()
+                .addComponent(lbl_username_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(lbl_user_status, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pan_msg_det, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
-                    .addComponent(pan_chat_body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(pan_msg_det, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(pan_msg_det, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pan_chat_body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(pan_msg_det, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout pan_chatOpenLayout = new javax.swing.GroupLayout(pan_chatOpen);
@@ -399,20 +386,24 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             .addGroup(pan_chatOpenLayout.createSequentialGroup()
                 .addGroup(pan_chatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_chatOpenLayout.createSequentialGroup()
-                        .addComponent(tf_send, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                        .addComponent(tf_send)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(but_send, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chat_body, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pan_chatOpenLayout.setVerticalGroup(
             pan_chatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_chatOpenLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pan_chatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tf_send, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(but_send, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(chat_body, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addGroup(pan_chatOpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(but_send, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tf_send, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pan_msg.add(pan_chatOpen, "card3");
@@ -430,9 +421,9 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             }
         });
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        sp.setBackground(new java.awt.Color(255, 255, 255));
+        sp.setBorder(null);
+        sp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         contact_list_pan.setBackground(new java.awt.Color(255, 255, 255));
         contact_list_pan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -446,10 +437,10 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         );
         contact_list_panLayout.setVerticalGroup(
             contact_list_panLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGap(0, 493, Short.MAX_VALUE)
         );
 
-        jScrollPane1.setViewportView(contact_list_pan);
+        sp.setViewportView(contact_list_pan);
 
         but_ref.setBackground(new java.awt.Color(51, 51, 255));
         but_ref.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -472,7 +463,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 .addComponent(but_ref)
                 .addContainerGap(10, Short.MAX_VALUE))
             .addGroup(pan_showFriendLayout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+                .addComponent(sp)
                 .addContainerGap())
         );
         pan_showFriendLayout.setVerticalGroup(
@@ -483,7 +474,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                     .addComponent(tf_search_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(but_ref, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE))
+                .addComponent(sp))
         );
 
         pan_contact.add(pan_showFriend, "card3");
@@ -508,7 +499,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             .addGroup(pan_no_friendLayout.createSequentialGroup()
                 .addGap(149, 149, 149)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addContainerGap(246, Short.MAX_VALUE))
         );
 
         pan_contact.add(pan_no_friend, "card2");
@@ -557,6 +548,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             msg_time = String.valueOf(localDateTime.getHour()+":"+localDateTime.getMinute());
             cl.sendMessage(username, receiver_username, msg,msg_time);
             tf_send.setText("");
+            chat_body.addItemLeft(msg);
+            
         }else{
             JOptionPane.showMessageDialog(null, "Can't Send Empty Msg");
         }
@@ -670,6 +663,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JButton but_quit;
     private javax.swing.JButton but_ref;
     private javax.swing.JButton but_send;
+    private com.mycompany.resources.chat_body chat_body;
     private javax.swing.JLabel chat_rev_prof_image;
     private javax.swing.JLayeredPane contact_list_pan;
     private javax.swing.JLabel jLabel1;
@@ -678,14 +672,12 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_add_new_friend;
     private javax.swing.JLabel lbl_img;
     private javax.swing.JLabel lbl_new_request;
     private javax.swing.JLabel lbl_user_status;
     private javax.swing.JLabel lbl_username_chat;
     private javax.swing.JPanel pan_chatOpen;
-    private javax.swing.JPanel pan_chat_body;
     private javax.swing.JPanel pan_contact;
     private javax.swing.JPanel pan_msg;
     private javax.swing.JPanel pan_msg_det;
@@ -694,6 +686,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JPanel pan_showFriend;
     private javax.swing.JPanel pan_top;
     private javax.swing.JPanel pan_top_buts;
+    private javax.swing.JScrollPane sp;
     private javax.swing.JTextField tf_search_user;
     private javax.swing.JTextField tf_send;
     // End of variables declaration//GEN-END:variables

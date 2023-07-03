@@ -6,15 +6,15 @@ import java.awt.Color;
  *
  * @author Aryan Mehta
  */
-public class chat_left extends javax.swing.JLayeredPane {
+public class chat_right extends javax.swing.JLayeredPane {
 
-    public chat_left() {
+    public chat_right() {
         initComponents();
     }
 
     public void setText(String text){
         txt.addText(text);
-        txt.setBackground(new Color(204,204,204));
+        txt.setBackground(new Color(179,233,255));
     }
     
     @SuppressWarnings("unchecked")
@@ -23,7 +23,7 @@ public class chat_left extends javax.swing.JLayeredPane {
 
         txt = new com.mycompany.resources.chatItem();
 
-        txt.setBackground(new java.awt.Color(204, 204, 204));
+        setLayer(txt, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

@@ -1,9 +1,5 @@
 package com.mycompany.SwingItems;
 
-/**
- *
- * @author Aryan Mehta
- */
 import javax.swing.JTextPane;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BoxView;
@@ -17,8 +13,11 @@ import javax.swing.text.StyledEditorKit;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
-public class JIMSendTextPane extends JTextPane {
-
+/**
+ *
+ * @author Aryan Mehta
+ */
+public class AutoTextSize extends JTextPane{
     private class WarpEditorKit extends StyledEditorKit {
 
         private ViewFactory defaultFactory = new WarpColumnFactory();
@@ -73,7 +72,7 @@ public class JIMSendTextPane extends JTextPane {
 
     //this category
     //Constructor
-    public JIMSendTextPane() {
+    public AutoTextSize() {
         super();
         this.setEditorKit(new WarpEditorKit());
     }

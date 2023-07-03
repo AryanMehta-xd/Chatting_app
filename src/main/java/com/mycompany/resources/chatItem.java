@@ -1,22 +1,25 @@
 package com.mycompany.resources;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 /**
  *
  * @author Aryan Mehta
  */
 public class chatItem extends javax.swing.JPanel {
-    
+
     public chatItem() {
         initComponents();
-        init();
-    }
-    
-    private void init(){
-        txt_msg.setEditable(false);
+        txt.setEditable(false);
+        txt.setBackground(new Color(0,0,0,0));
+        txt.setOpaque(false);
     }
 
-    public void setText(String text){
-        txt_msg.setText(text);
+    public void addText(String text){
+        txt.setText(text);
     }
     
     /**
@@ -28,22 +31,26 @@ public class chatItem extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txt_msg = new com.mycompany.SwingItems.JIMSendTextPane();
+        txt = new com.mycompany.SwingItems.AutoTextSize();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_msg, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+
+        txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(txt);
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 1);
+        super.paintComponent(g);
+    }
 
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mycompany.SwingItems.JIMSendTextPane txt_msg;
+    private com.mycompany.SwingItems.AutoTextSize txt;
     // End of variables declaration//GEN-END:variables
 }
