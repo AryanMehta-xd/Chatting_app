@@ -12,9 +12,10 @@ public class chat_left extends javax.swing.JLayeredPane {
         initComponents();
     }
 
-    public void setText(String text){
+    public void setText(String text,String time){
         txt.addText(text);
         txt.setBackground(new Color(204,204,204));
+        txt.setTime(time);
     }
     
     @SuppressWarnings("unchecked")
@@ -24,6 +25,8 @@ public class chat_left extends javax.swing.JLayeredPane {
         txt = new com.mycompany.resources.chatItem();
 
         txt.setBackground(new java.awt.Color(204, 204, 204));
+
+        setLayer(txt, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

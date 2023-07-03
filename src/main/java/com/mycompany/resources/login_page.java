@@ -200,7 +200,7 @@ public class login_page extends javax.swing.JFrame {
             }
             
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Something went Wrong!!");
         }
     }//GEN-LAST:event_but_loginActionPerformed
 
@@ -229,7 +229,7 @@ public class login_page extends javax.swing.JFrame {
                 }
 
             }catch (Exception e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Something went Wrong!!");
             }
         }else if (evt.getKeyCode()==KeyEvent.VK_ESCAPE) {
             dispose();

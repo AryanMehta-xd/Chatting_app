@@ -20,17 +20,17 @@ public class chat_body extends javax.swing.JPanel {
         
     }
     
-    public void addItemLeft(String text){
+    public void addItemLeft(String text,String time){
         chat_left item = new chat_left();
-        item.setText(text);
+        item.setText(text,time);
         body.add(item,"wrap, w :: 80%");
         body.repaint();
         body.revalidate();
     }
     
-    public void addItemRight(String text){
+    public void addItemRight(String text,String time){
         chat_right item = new chat_right();
-        item.setText(text);
+        item.setText(text,time);
         body.add(item,"wrap, al right, w ::80%");
         body.repaint();
         body.revalidate();

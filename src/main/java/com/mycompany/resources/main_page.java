@@ -5,6 +5,7 @@ import com.mycompany.dataPacks.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private String msg_time;
     private boolean not_pan_status = false;
     private boolean notification_status;
+    private String current_open_tab = null;
     
     public main_page(String user) {
         initComponents();
@@ -145,6 +147,20 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             sp.setVerticalScrollBar(new ScrollBar());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    private void sendMessage(){
+        msg = tf_send.getText();
+        if(!msg.equals("")){
+            localDateTime = LocalDateTime.now();
+            msg_time = String.valueOf(localDateTime.getHour()+":"+localDateTime.getMinute());
+            cl.sendMessage(username, receiver_username, msg,msg_time);
+            tf_send.setText("");
+            chat_body.addItemLeft(msg,msg_time);
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Can't Send Empty Msg");
         }
     }
     
@@ -334,6 +350,11 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
 
         tf_send.setFont(new java.awt.Font("JetBrains Mono", 0, 14)); // NOI18N
         tf_send.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tf_send.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_sendKeyPressed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -542,17 +563,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     }// </editor-fold>//GEN-END:initComponents
 
     private void but_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_sendActionPerformed
-        msg = tf_send.getText();
-        if(!msg.equals("")){
-            localDateTime = LocalDateTime.now();
-            msg_time = String.valueOf(localDateTime.getHour()+":"+localDateTime.getMinute());
-            cl.sendMessage(username, receiver_username, msg,msg_time);
-            tf_send.setText("");
-            chat_body.addItemLeft(msg);
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "Can't Send Empty Msg");
-        }
+        sendMessage();
     }//GEN-LAST:event_but_sendActionPerformed
 
     private void addPanels(String user_name){
@@ -618,6 +629,12 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         contact_list_pan.removeAll();
         showFriends();
     }//GEN-LAST:event_but_refActionPerformed
+
+    private void tf_sendKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_sendKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            sendMessage();
+        }
+    }//GEN-LAST:event_tf_sendKeyPressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

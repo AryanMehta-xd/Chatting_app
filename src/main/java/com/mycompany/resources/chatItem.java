@@ -1,9 +1,13 @@
 package com.mycompany.resources;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -22,6 +26,16 @@ public class chatItem extends javax.swing.JPanel {
         txt.setText(text);
     }
     
+    public void setTime(String time){
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setLayout(new FlowLayout(FlowLayout.RIGHT,0,0));
+        layeredPane.setBorder(new EmptyBorder(0,5,10,5));
+        JLabel label = new JLabel(time);
+        label.setForeground(new Color(102,102,102));
+        layeredPane.add(label);
+        add(layeredPane);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,7 +49,7 @@ public class chatItem extends javax.swing.JPanel {
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
-        txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 5, 10));
         txt.setFont(new java.awt.Font("JetBrains Mono", 0, 14)); // NOI18N
         add(txt);
     }// </editor-fold>//GEN-END:initComponents

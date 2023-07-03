@@ -347,6 +347,9 @@
                       </Border>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tf_sendKeyPressed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JPanel" name="jPanel2">
                   <Properties>
