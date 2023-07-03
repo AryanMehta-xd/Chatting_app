@@ -28,7 +28,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private LocalDateTime localDateTime;
     
     //global Variable
-    private String send_path = "src/main/java/com/mycompany/Images/icons8_paper_plane_24px.png";
+    private final String send_path = "src/main/java/com/mycompany/Images/icons8_paper_plane_24px.png";
     private String username;    
     private String msg;
     private String receiver_username;
@@ -87,8 +87,9 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             if(component instanceof contact_tab){
                 contact_tab con_tab = (contact_tab)component;
                 
-                if(con_tab.getReceiverName().equals(sender)){
-                    con_tab.setMsgLabelVisible(true);
+                //sender's tab is open
+                if(current_open_tab.equals(con_tab.getReceiverName())&&con_tab.getReceiverName().equals(sender)){
+                    chat_body.addItemRight(msg, msg_t);
                 }
             }
         }
@@ -578,6 +579,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                         pan_chatOpen.setVisible(true);
                         pan_noChatOpen.setVisible(false);
                         con_tab.setMsgLabelVisible(false);
+                        current_open_tab = user;
                     }
                 });
                 
