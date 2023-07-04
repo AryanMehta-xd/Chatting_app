@@ -28,9 +28,9 @@ public class chat_body extends javax.swing.JPanel {
         body.revalidate();
     }
     
-    public void addItemRight(String text,String time){
+    public void addItemRight(String text,String time,String rev){
         chat_right item = new chat_right();
-        item.setText(text,time);
+        item.setText(text,time,rev);
         body.add(item,"wrap, al right, w ::80%");
         body.repaint();
         body.revalidate();

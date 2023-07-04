@@ -194,11 +194,17 @@
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbl_new_request">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Notifications"/>
+                  </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lbl_new_requestMouseClicked"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbl_add_new_friend">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Add New Friend"/>
+                  </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lbl_add_new_friendMouseClicked"/>
                   </Events>

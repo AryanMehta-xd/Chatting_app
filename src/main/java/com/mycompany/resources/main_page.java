@@ -92,7 +92,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         
         //sender tab is open
         if(current_open_tab.equals(sender)){
-            chat_body.addItemRight(msg, msg_t);
+            chat_body.addItemRight(msg, msg_t,sender);
         }
         
         //sender tab is not open
@@ -149,7 +149,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 if(msg_sender.equals(user)){
                     chat_body.addItemLeft(full_received_msg, rev_msg_time);
                 }else{
-                    chat_body.addItemRight(full_received_msg, rev_msg_time);
+                    chat_body.addItemRight(full_received_msg, rev_msg_time,msg_sender);
                 }
             }
             
@@ -299,12 +299,14 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             }
         });
 
+        lbl_new_request.setToolTipText("Notifications");
         lbl_new_request.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_new_requestMouseClicked(evt);
             }
         });
 
+        lbl_add_new_friend.setToolTipText("Add New Friend");
         lbl_add_new_friend.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_add_new_friendMouseClicked(evt);

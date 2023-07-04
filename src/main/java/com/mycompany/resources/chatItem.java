@@ -2,9 +2,11 @@ package com.mycompany.resources;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.EmptyBorder;
@@ -34,6 +36,21 @@ public class chatItem extends javax.swing.JPanel {
         label.setForeground(new Color(102,102,102));
         layeredPane.add(label);
         add(layeredPane);
+    }
+    
+    public void setUserLabel(String name){
+        JLayeredPane layer = new JLayeredPane();
+        layer.setLayout(new FlowLayout(FlowLayout.LEFT,0,10));
+        layer.setBorder(new EmptyBorder(10,10,0,10));
+        JButton b = new JButton(name);
+        b.setBorder(null);
+        b.setContentAreaFilled(false);
+        b.setFocusable(false);
+        b.setForeground(Color.BLUE);
+        b.setFont(new java.awt.Font("JetBrains Mono", 0, 12));
+        txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 5, 10));
+        layer.add(b);
+        add(layer,0);
     }
     
     /**

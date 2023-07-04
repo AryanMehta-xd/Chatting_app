@@ -16,6 +16,7 @@ public class chat_left extends javax.swing.JLayeredPane {
         txt.addText(text);
         txt.setBackground(new Color(204,204,204));
         txt.setTime(time);
+        txt.setUserLabel("You");
     }
     
     @SuppressWarnings("unchecked")

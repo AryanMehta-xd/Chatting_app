@@ -4,6 +4,7 @@ import com.mycompany.dataPacks.PanelClickListener;
 import com.mycompany.dataPacks.db_conn;
 import com.mycompany.dataPacks.imageMethods;
 import java.awt.Color;
+import java.awt.Cursor;
 import javax.swing.Icon;
 
 /**
@@ -34,7 +35,6 @@ public class contact_tab extends javax.swing.JPanel {
         } else {
             lbl_img.setText("Image not found");
         }
-            //lbl_msg_num.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_alarm_24px.png", lbl_msg_num));
             lbl_msg_num.setVisible(false);
             
     }
@@ -45,6 +45,7 @@ public class contact_tab extends javax.swing.JPanel {
     
     public void setMsgLabelVisible(boolean status){
         lbl_msg_num.setVisible(status);
+        revalidate();
     }
     
     public String getReceiverName(){
@@ -92,7 +93,7 @@ public class contact_tab extends javax.swing.JPanel {
         lbl_img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lbl_img.setOpaque(true);
 
-        lbl_msg_num.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_msg_num.setBackground(new java.awt.Color(153, 255, 153));
         lbl_msg_num.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_msg_num.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_msg_num.setOpaque(true);
@@ -105,18 +106,20 @@ public class contact_tab extends javax.swing.JPanel {
                 .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbl_username, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(lbl_msg_num, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -136,6 +139,7 @@ public class contact_tab extends javax.swing.JPanel {
 
     private void lbl_usernameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_usernameMouseEntered
         setBackground(Color.LIGHT_GRAY);
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_lbl_usernameMouseEntered
 
     private void lbl_usernameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_usernameMouseExited
