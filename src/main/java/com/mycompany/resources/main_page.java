@@ -38,8 +38,6 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private boolean not_pan_status = false;
     private boolean notification_status;
     private String current_open_tab = "no_tab_open";
-    
-    
     private String msg_sender;
     private String msg_rev;
     private String rev_msg_time;

@@ -211,26 +211,7 @@ public class login_page extends javax.swing.JFrame {
 
     private void tf_usernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_usernameKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER ){
-            try {
-                username = tf_username.getText();
-                password = tf_password.getText();
-
-                PreparedStatement ps = db_var.db_Connection.prepareStatement("select * from login where username = ? and password = ?");
-                ps.setString(1, username);
-                ps.setString(2, password);
-
-                rs = ps.executeQuery();
-
-                if(rs.next()){
-                    dispose();
-                    new main_page(username);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Invalid Credentials");
-                }
-
-            }catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Something went Wrong!!");
-            }
+            userLogin();
         }else if (evt.getKeyCode()==KeyEvent.VK_ESCAPE) {
             dispose();
         }
@@ -251,9 +232,34 @@ public class login_page extends javax.swing.JFrame {
     private void tf_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_passwordKeyPressed
         if (evt.getKeyCode()==KeyEvent.VK_ESCAPE) {
             dispose();
+        }else if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            userLogin();
         }
     }//GEN-LAST:event_tf_passwordKeyPressed
 
+    private void userLogin(){
+        try {
+            username = tf_username.getText();
+            password = tf_password.getText();
+
+            PreparedStatement ps = db_var.db_Connection.prepareStatement("select * from login where username = ? and password = ?");
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                dispose();
+                new main_page(username);
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid Credentials");
+            }
+
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Something went Wrong!!");
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

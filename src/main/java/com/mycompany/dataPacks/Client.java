@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.net.Socket;
-import javax.swing.JLabel;
 
 public class Client extends Thread{
     private String username;
