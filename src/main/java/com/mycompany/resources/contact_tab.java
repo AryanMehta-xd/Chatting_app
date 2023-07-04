@@ -34,7 +34,7 @@ public class contact_tab extends javax.swing.JPanel {
         } else {
             lbl_img.setText("Image not found");
         }
-            lbl_msg_num.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_alarm_24px.png", lbl_msg_num));
+            //lbl_msg_num.setIcon(im.reSize("src/main/java/com/mycompany/Images/icons8_alarm_24px.png", lbl_msg_num));
             lbl_msg_num.setVisible(false);
             
     }
@@ -114,9 +114,9 @@ public class contact_tab extends javax.swing.JPanel {
             .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_msg_num, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_username, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(lbl_msg_num, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -36,6 +36,12 @@ public class chat_body extends javax.swing.JPanel {
         body.revalidate();
     }
     
+    public void clearBody(){
+        body.removeAll();
+        body.repaint();
+        body.revalidate();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

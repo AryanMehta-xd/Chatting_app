@@ -59,7 +59,7 @@ public class Client extends Thread{
 
             callback.onMessageReceive(sender_username, rev_username, msg,msg_time);
             
-            System.out.println("Msg:"+msg+"\nfrom :"+sender_username+"\nOn :"+msg_time);
+            //System.out.println("Msg:"+msg+"\nfrom :"+sender_username+"\nOn :"+msg_time);
         }catch (EOFException e) {
             System.out.println("Connection closed by the server.");
             return false;

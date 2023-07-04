@@ -8,6 +8,7 @@ import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -19,24 +20,30 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     
     //constructor Declaration
     private imageMethods im = new imageMethods();
-    private PreparedStatement ps1,ps2,ps3;
-    private ResultSet rs1,rs2,rs3;
+    private PreparedStatement ps1,ps2,ps3,ps4,ps5;
+    private ResultSet rs1,rs2,rs3,rs4;
     private db_conn db_var = new db_conn();
     private Client cl;
     private db_friend_queries chk = new db_friend_queries();
     private new_request_confirm new_req;
-    private LocalDateTime localDateTime;
+    private LocalDateTime localDateTime; 
     
     //global Variable
     private final String send_path = "src/main/java/com/mycompany/Images/icons8_paper_plane_24px.png";
     private String username;    
     private String msg;
     private String receiver_username;
-    private String[] full_received_msg;
+    private String full_received_msg;
     private String msg_time;
     private boolean not_pan_status = false;
     private boolean notification_status;
-    private String current_open_tab = null;
+    private String current_open_tab = "no_tab_open";
+    
+    
+    private String msg_sender;
+    private String msg_rev;
+    private String rev_msg_time;
+    
     
     public main_page(String user) {
         initComponents();
@@ -45,6 +52,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     }
 
     public void init(){
+        
+        lbl_main_username.setText(username);
         
         but_send.setIcon(im.reSize(send_path, but_send));
         lbl_img.setIcon(im.getImage(lbl_img,username));
@@ -75,23 +84,79 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
         Container container = getContentPane();
         ((JComponent) container).setBorder(border); 
-        
-        
+
         setVisible(true);
         methodThread.start();
     }
     
     @Override
     public void onMessageReceive(String sender, String rev, String msg,String msg_t) {
-        for(Component component:contact_list_pan.getComponents()){
-            if(component instanceof contact_tab){
-                contact_tab con_tab = (contact_tab)component;
-                
-                //sender's tab is open
-                if(current_open_tab.equals(con_tab.getReceiverName())&&con_tab.getReceiverName().equals(sender)){
-                    chat_body.addItemRight(msg, msg_t);
+        
+        //sender tab is open
+        if(current_open_tab.equals(sender)){
+            chat_body.addItemRight(msg, msg_t);
+        }
+        
+        //sender tab is not open
+        else{
+            for(Component component:contact_list_pan.getComponents()){
+                if(component instanceof contact_tab){
+                    contact_tab con_tab = (contact_tab)component;
+                    
+                    if(con_tab.getReceiverName().equals(sender)){
+                        con_tab.setMsgLabelVisible(true);
+                    }
                 }
             }
+        }
+        
+    }
+    
+    private void saveMessage_onSend(String sender,String rev,String msg,String msg_t){
+        
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        
+        try {
+            ps4 = db_var.db_Connection.prepareStatement("insert into chat_history values(?,?,?,?,?)");
+            ps4.setString(1, sender);
+            ps4.setString(2, rev);
+            ps4.setString(3, msg_t);
+            ps4.setString(4, msg);
+            ps4.setTimestamp(5,timestamp);
+            
+            ps4.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void getMessage(String user,String rev){
+        chat_body.clearBody();
+        try {
+            ps5 = db_var.db_Connection.prepareStatement("select * from chat_history WHERE (sender_username = ? AND receiver_username = ?) OR (sender_username = ? AND receiver_username = ?) ORDER BY msg_timestamp");
+            ps5.setString(1, user);
+            ps5.setString(2, rev);
+            
+            ps5.setString(3, rev);
+            ps5.setString(4, user);
+        
+            rs4 = ps5.executeQuery();
+            
+            while(rs4.next()){
+                msg_sender = rs4.getString("sender_username");
+                msg_rev = rs4.getString("receiver_username");
+                rev_msg_time = rs4.getString("msg_time");
+                full_received_msg = rs4.getString("full_msg");
+                
+                if(msg_sender.equals(user)){
+                    chat_body.addItemLeft(full_received_msg, rev_msg_time);
+                }else{
+                    chat_body.addItemRight(full_received_msg, rev_msg_time);
+                }
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     
@@ -159,7 +224,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             cl.sendMessage(username, receiver_username, msg,msg_time);
             tf_send.setText("");
             chat_body.addItemLeft(msg,msg_time);
-            
+            saveMessage_onSend(username,receiver_username,msg,msg_time);
         }else{
             JOptionPane.showMessageDialog(null, "Can't Send Empty Msg");
         }
@@ -178,6 +243,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         but_quit = new javax.swing.JButton();
         lbl_new_request = new javax.swing.JLabel();
         lbl_add_new_friend = new javax.swing.JLabel();
+        lbl_main_username = new javax.swing.JLabel();
         pan_msg = new javax.swing.JPanel();
         pan_noChatOpen = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -247,6 +313,9 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
             }
         });
 
+        lbl_main_username.setFont(new java.awt.Font("JetBrains Mono", 0, 14)); // NOI18N
+        lbl_main_username.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+
         javax.swing.GroupLayout pan_top_butsLayout = new javax.swing.GroupLayout(pan_top_buts);
         pan_top_buts.setLayout(pan_top_butsLayout);
         pan_top_butsLayout.setHorizontalGroup(
@@ -258,8 +327,10 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                 .addComponent(but_logout, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_add_new_friend, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(lbl_new_request, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbl_main_username, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pan_top_butsLayout.setVerticalGroup(
@@ -270,7 +341,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                     .addComponent(but_quit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(but_logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbl_new_request, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_add_new_friend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbl_add_new_friend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_main_username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -580,6 +652,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                         pan_noChatOpen.setVisible(false);
                         con_tab.setMsgLabelVisible(false);
                         current_open_tab = user;
+                        getMessage(username, user);
                     }
                 });
                 
@@ -693,6 +766,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lbl_add_new_friend;
     private javax.swing.JLabel lbl_img;
+    private javax.swing.JLabel lbl_main_username;
     private javax.swing.JLabel lbl_new_request;
     private javax.swing.JLabel lbl_user_status;
     private javax.swing.JLabel lbl_username_chat;
