@@ -276,6 +276,7 @@ public class signup_page extends javax.swing.JFrame {
 
     private void but_reset_imgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_reset_imgActionPerformed
         tf_profile_photo.setIcon(im.reSize(path_default_img, tf_profile_photo));
+        img_file = new File(path_default_img);
         jPanel1.revalidate();
     }//GEN-LAST:event_but_reset_imgActionPerformed
 
