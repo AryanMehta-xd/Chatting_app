@@ -35,6 +35,7 @@ public class contact_tab extends javax.swing.JPanel {
         } else {
             lbl_img.setText("Image not found");
         }
+            lbl_msg_num.setIcon(im.reSize("src/main/java/com/mycompany/Images/new_msg.png", lbl_msg_num));
             lbl_msg_num.setVisible(false);
             
     }
