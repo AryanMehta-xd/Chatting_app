@@ -20,8 +20,8 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     
     //constructor Declaration
     private imageMethods im = new imageMethods();
-    private PreparedStatement ps1,ps2,ps3,ps4,ps5;
-    private ResultSet rs1,rs2,rs3,rs4;
+    private PreparedStatement ps1,ps2,ps3,ps4,ps5,ps6;
+    private ResultSet rs1,rs2,rs3,rs4,rs5;
     private db_conn db_var = new db_conn();
     private Client cl;
     private db_friend_queries chk = new db_friend_queries();
@@ -45,7 +45,17 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     
     public main_page(String user) {
         initComponents();
-        this.username = user;
+        try {
+            ps6 = db_var.db_Connection.prepareStatement("select username from login where username = ?");
+            ps6.setString(1, user);
+            rs5 = ps6.executeQuery();
+            
+            while(rs5.next()){
+                this.username = rs5.getString("username");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         init();
     }
 

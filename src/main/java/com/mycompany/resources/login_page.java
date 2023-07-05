@@ -182,26 +182,7 @@ public class login_page extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void but_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_loginActionPerformed
-        try {
-            username = tf_username.getText();
-            password = tf_password.getText();
-            
-            PreparedStatement ps = db_var.db_Connection.prepareStatement("select * from login where username = ? and password = ?");
-            ps.setString(1, username);
-            ps.setString(2, password);
-            
-            rs = ps.executeQuery();
-            
-            if(rs.next()){
-                dispose();
-                new main_page(username);
-            }else{
-                JOptionPane.showMessageDialog(null, "Invalid Credentials");
-            }
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Something went Wrong!!");
-        }
+        userLogin();
     }//GEN-LAST:event_but_loginActionPerformed
 
     private void but_signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_signupActionPerformed
