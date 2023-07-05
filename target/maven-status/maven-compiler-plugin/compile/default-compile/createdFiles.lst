@@ -35,6 +35,7 @@ com\mycompany\resources\chat_right.class
 com\mycompany\resources\login_page.class
 com\mycompany\resources\main_page$4.class
 com\mycompany\dataPacks\Client.class
+com\mycompany\session_files\SessionManager.class
 com\mycompany\chatting_app\Chatting_App.class
 com\mycompany\resources\userAddPanel.class
 com\mycompany\resources\signup_page$4.class

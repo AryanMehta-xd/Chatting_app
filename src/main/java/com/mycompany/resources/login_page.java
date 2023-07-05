@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import com.mycompany.dataPacks.imageMethods;
+import com.mycompany.session_files.SessionManager;
 
 /**
  *
@@ -231,6 +232,7 @@ public class login_page extends javax.swing.JFrame {
 
             if(rs.next()){
                 dispose();
+                SessionManager.createSession(username);
                 new main_page(username);
             }else{
                 JOptionPane.showMessageDialog(null, "Invalid Credentials");

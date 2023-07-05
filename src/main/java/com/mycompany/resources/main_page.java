@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import net.miginfocom.swing.MigLayout;
+import com.mycompany.session_files.SessionManager;
 
 public class main_page extends javax.swing.JFrame implements MessageReceivedCallbacbk{
     
@@ -681,6 +682,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
         dispose();
         cl.userLogout();
         new login_page();
+        SessionManager.removeSession();
     }//GEN-LAST:event_but_logoutActionPerformed
 
     private void but_quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_quitActionPerformed
