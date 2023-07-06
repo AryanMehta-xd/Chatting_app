@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
+import com.mycompany.dataPacks.data_encryption;
+
 /**
  *
  * @author Aryan Mehta
@@ -16,9 +18,10 @@ import java.time.LocalDateTime;
 public class SessionManager {
     private static final String SESSION_FILE = "app_session.txt";
     
+    
     public static void createSession(String username) {
         LocalDateTime startTime = LocalDateTime.now();
-        String sessionData = username + "," + startTime.toString();
+        String sessionData = data_encryption.encrypt(username) + "," + data_encryption.encrypt(startTime.toString());
         saveSessionData(sessionData);
     }
     
@@ -27,11 +30,11 @@ public class SessionManager {
             String sessionData = reader.readLine();
             if (sessionData != null && !sessionData.isEmpty()) {
                 String[] parts = sessionData.split(",");
-                String startTimeStr = parts[1];
+                String startTimeStr = data_encryption.decrypt(parts[1]);
                 return LocalDateTime.parse(startTimeStr);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();       
         }
         return null;
     }
@@ -77,11 +80,11 @@ public class SessionManager {
             String sessionData = reader.readLine();
             if (sessionData != null && !sessionData.isEmpty()) {
                 String[] parts = sessionData.split(",");
-                return parts[0];
+                return data_encryption.decrypt(parts[0]);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-}
+} 

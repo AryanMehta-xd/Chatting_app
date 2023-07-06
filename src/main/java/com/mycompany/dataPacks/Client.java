@@ -91,16 +91,4 @@ public class Client extends Thread{
         }
     }
     
-    public boolean checkUserStatus(String username){
-        boolean status = false;
-        try {
-            output.writeUTF("!checkStatus");
-            output.writeUTF(username);
-            status = input.readBoolean();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return status;
-    }
-    
 }
