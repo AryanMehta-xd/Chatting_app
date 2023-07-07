@@ -54,6 +54,7 @@ com\mycompany\resources\signup_page$2.class
 com\mycompany\resources\main_page$1.class
 com\mycompany\SwingItems\ModernScrollbarUI.class
 com\mycompany\resources\login_page$7.class
+com\mycompany\dataPacks\data_encryption.class
 com\mycompany\resources\addFriend_main$3.class
 com\mycompany\resources\chat_body.class
 com\mycompany\dataPacks\imageMethods.class
