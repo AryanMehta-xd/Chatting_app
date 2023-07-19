@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class db_conn {
     public Connection db_Connection;
-    private String db_user = "root";
-    private String db_pass = "1234";
-    private String db_connect = "jdbc:mysql://127.0.0.1:3306/chat_app";
+    private String db_user = "admin_Chat";
+    private String db_pass = "chatting_app_2023";
+    private String db_connect = "jdbc:mysql://db-chatting-app.cybqlqagqdu6.ap-south-1.rds.amazonaws.com:3306/chatting_app";
     
     public db_conn(){
         try {
