@@ -16,9 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import net.miginfocom.swing.MigLayout;
 import com.mycompany.session_files.SessionManager;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class main_page extends javax.swing.JFrame implements MessageReceivedCallbacbk{
     
