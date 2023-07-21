@@ -46,17 +46,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
     
     public main_page(String user) {
         initComponents();
-        try {
-            ps6 = db_var.db_Connection.prepareStatement("select username from login where username = ?");
-            ps6.setString(1, user);
-            rs5 = ps6.executeQuery();
-            
-            while(rs5.next()){
-                this.username = rs5.getString("username");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.username = user;
         init();
     }
 

@@ -231,13 +231,18 @@ public class login_page extends javax.swing.JFrame {
             rs = ps.executeQuery();
 
             if(rs.next()){
+                
+                String sel_user = rs.getString("username");
+                
+                SessionManager.createSession(sel_user);
+                new main_page(sel_user);
                 dispose();
-                SessionManager.createSession(username);
-                new main_page(username);
             }else{
                 JOptionPane.showMessageDialog(null, "Invalid Credentials");
             }
 
+            
+            
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Something went Wrong!!");
         }
