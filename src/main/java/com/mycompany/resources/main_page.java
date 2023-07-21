@@ -439,6 +439,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
 
         chat_rev_prof_image.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        lbl_user_status.setForeground(new java.awt.Color(153, 255, 153));
         lbl_user_status.setToolTipText("");
 
         javax.swing.GroupLayout pan_msg_detLayout = new javax.swing.GroupLayout(pan_msg_det);
@@ -455,12 +456,12 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                         .addComponent(lbl_user_status, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         pan_msg_detLayout.setVerticalGroup(
-            pan_msg_detLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(chat_rev_prof_image, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_msg_detLayout.createSequentialGroup()
+            pan_msg_detLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(chat_rev_prof_image, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(pan_msg_detLayout.createSequentialGroup()
                 .addComponent(lbl_username_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(lbl_user_status, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_user_status, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -654,6 +655,7 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                         con_tab.setMsgLabelVisible(false);
                         current_open_tab = user;
                         getMessage(username, user);
+                        lbl_user_status.setText(chk.checkUserStatus(user));
                     }
                 });
                 

@@ -74,4 +74,22 @@ public class db_friend_queries {
         }
         return status;
     }
+    
+    public String checkUserStatus(String chk_username){
+        String user_s = null;
+        try {
+            ps1 = db_var.db_Connection.prepareStatement("select user_status from user_status_tab where username = ?");
+            ps1.setString(1, chk_username);
+            rs1 = ps1.executeQuery();
+            
+            while(rs1.next()){
+                return user_s = rs1.getString("user_status");
+                
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user_s;
+    }
 }
