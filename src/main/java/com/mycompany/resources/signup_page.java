@@ -28,13 +28,13 @@ public class signup_page extends javax.swing.JFrame {
     private String test_user;
     private String password;
     private int warning=0,img_default = 1;
-    private int Status1,Status2,choice;
+    private int Status1,Status2,choice,Status3;
     
     //contructors
     imageMethods im = new imageMethods();
     db_conn db_var =  new db_conn();
     JFileChooser jFileChooser = new JFileChooser();
-    PreparedStatement ps1,ps2;
+    PreparedStatement ps1,ps2,ps3;
     ResultSet rs;
     FileInputStream fileInput;
     
@@ -313,10 +313,14 @@ public class signup_page extends javax.swing.JFrame {
                     ps2.setString(1, username);
                     ps2.setString(2, password);
                     
+                    ps3 = db_var.db_Connection.prepareStatement("insert into user_status_tab values(?,?)");
+                    ps3.setString(1, username);
+                    ps3.setString(2, "Offline");
+                    
                     Status1 = ps1.executeUpdate();
                     Status2 = ps2.executeUpdate();
-                    
-                    if(Status1==1&&Status2==1){
+                    Status3 = ps3.executeUpdate();
+                    if(Status1==1&&Status2==1&&Status3==1){
                         JOptionPane.showMessageDialog(null, "Account Created Successfully!\nWelcome :"+username);
                         dispose();
                         new login_page();
