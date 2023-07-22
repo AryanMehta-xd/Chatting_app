@@ -655,7 +655,13 @@ public class main_page extends javax.swing.JFrame implements MessageReceivedCall
                         con_tab.setMsgLabelVisible(false);
                         current_open_tab = user;
                         getMessage(username, user);
-                        lbl_user_status.setText(chk.checkUserStatus(user));
+                        if(chk.checkUserStatus(user).equals("Online")){
+                            lbl_user_status.setForeground(Color.GREEN);
+                            lbl_user_status.setText("Online");
+                        }else{
+                            lbl_user_status.setForeground(Color.red);
+                            lbl_user_status.setText("Offline");
+                        }
                     }
                 });
                 
